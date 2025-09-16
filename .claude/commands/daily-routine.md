@@ -54,6 +54,11 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
   5. **Error Handling**: If count mismatch, report discrepancy and list what was/wasn't created
 - **Create Tasks**: For each specific actionable task, create individual work task in Work Task Database (181c548c-c4ff-80ba-8a01-f3ed0b4a7fef):
   - Task name: [Specific actionable task name, NOT the instruction text]
+  - **Include relevant deep links in task description**:
+    - LinkedIn connections: https://www.linkedin.com/mynetwork/invite-connect/connections/
+    - LinkedIn messages: https://www.linkedin.com/messaging/
+    - Apollo prospecting: https://app.apollo.io/#/tasks?dateRange[max]=YYYY-MM-DD&sortByField=task_due_at&sortAscending=true (replace YYYY-MM-DD with today's date)
+    - Email follow-ups: https://mail.google.com/mail/u/0/#inbox
   - Tag: Appropriate tag based on content (Build, Serve, Sell, Admin, etc.)
   - Assign to Edmund (6ae517a8-2360-434b-9a29-1cbc6a427147)
   - Link to current sprint: **USE DYNAMIC SPRINT ID FROM STEP 3**

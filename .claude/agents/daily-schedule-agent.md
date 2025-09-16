@@ -75,9 +75,14 @@ Generate `daily_schedule_YYYY-MM-DD.md` in root directory following the template
 4. **Context**: Yesterday's wins, carried tasks, weekly progress
 
 ### Task Link Requirements
-**MANDATORY**: Every task must include clickable Notion links:
-- Format: `- [ ] **[Task Name](https://www.notion.so/Task-Name-page-id)** - {context}`
+**MANDATORY**: Every task must include clickable Notion links AND actionable deep links:
+- Format: `- [ ] **[Task Name](https://www.notion.so/Task-Name-page-id)** - {context} | [Deep Link]`
 - Use page URLs from Notion API responses
+- **ALWAYS ADD DEEP LINKS** for immediate action:
+  - LinkedIn tasks: https://www.linkedin.com/mynetwork/invite-connect/connections/
+  - Email tasks: https://mail.google.com/mail/u/0/#inbox
+  - Client follow-ups: Include relevant contact/CRM links
+  - Apollo prospecting: https://app.apollo.io/#/tasks?dateRange[max]=YYYY-MM-DD&sortByField=task_due_at&sortAscending=true (use today's date for YYYY-MM-DD)
 - Both active AND completed tasks need links for easy reference
 - **CRITICAL**: List each individual task separately - NEVER create summary/group tasks
 - **Example**: If 8 client follow-ups exist, list all 8 individual tasks with their own Notion links, NOT a single "8 Client Follow-ups" summary task
