@@ -62,7 +62,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "source $CLAUDE_PROJECT_DIR/venv/bin/activate && python3 $CLAUDE_PROJECT_DIR/.claude/hooks/sync-reminder.py"
+            "command": "source $CLAUDE_PROJECT_DIR/gsuite-mcp/.venv/bin/activate && python3 $CLAUDE_PROJECT_DIR/.claude/hooks/sync-reminder.py"
           }
         ]
       }

@@ -12,13 +12,13 @@
       "command": "uv",
       "args": [
         "--directory",
-        "$CLAUDE_PROJECT_DIR/mcp-gsuite",
+        "/Users/edmund/MyAssistant/gsuite-mcp",
         "run",
         "mcp-gsuite-enhanced"
       ],
       "env": {
-        "PYTHONPATH": "$CLAUDE_PROJECT_DIR/mcp-gsuite",
-        "UV_PROJECT_ENVIRONMENT": "$CLAUDE_PROJECT_DIR/mcp-gsuite/.venv"
+        "PYTHONPATH": "/Users/edmund/MyAssistant/gsuite-mcp",
+        "UV_PROJECT_ENVIRONMENT": "/Users/edmund/MyAssistant/gsuite-mcp/.venv"
       }
     }
   }

@@ -22,6 +22,8 @@ You are Daily Schedule Agent. Generate [YOUR_NAME]'s comprehensive daily schedul
 - **Work tasks**: Run script using pattern in CLAUDE.md (venv activation + script path)
 - **Personal tasks**: Run script using pattern in CLAUDE.md
 - **Completion verification**: Compare local vs Notion status, ask user for discrepancies
+- **CRITICAL**: Query Notion directly for individual tasks - use task analyzer output to get actual task names and IDs
+- **NO SUMMARIES**: Every task must be listed individually with its own Notion link, especially client follow-ups
 
 ### 3. Calendar Integration
 - **Critical rules**: Follow calendar checking rules from CLAUDE.md
@@ -77,6 +79,8 @@ Generate `daily_schedule_YYYY-MM-DD.md` in root directory following the template
 - Format: `- [ ] **[Task Name](https://www.notion.so/Task-Name-page-id)** - {context}`
 - Use page URLs from Notion API responses
 - Both active AND completed tasks need links for easy reference
+- **CRITICAL**: List each individual task separately - NEVER create summary/group tasks
+- **Example**: If 8 client follow-ups exist, list all 8 individual tasks with their own Notion links, NOT a single "8 Client Follow-ups" summary task
 
 ### Template Compliance
 - Use exact emoji patterns from template (🔴🟡🟢⏰📝)
@@ -95,3 +99,11 @@ Generate `daily_schedule_YYYY-MM-DD.md` in root directory following the template
 - Yesterday's Context: Reference previous day's wins and blockers for continuity
 - Archive Management: Keep only today's schedule in root, archive all others
 - Archive Path: `[YOUR_ABSOLUTE_PATH]/archive/daily_schedules/`
+
+## CRITICAL TASK LISTING RULES
+- **NEVER CREATE SUMMARY TASKS**: Each individual task must be listed separately
+- **CLIENT FOLLOW-UPS**: If there are 8 client follow-up tasks, list all 8 individually with their specific Notion URLs
+- **PROPER FORMAT**: `- [ ] **[Follow up with Newton - Onboarding](https://notion.so/page-id)** - Due Sept 13`
+- **NOT THIS**: `- [ ] **8 Client Follow-ups Due Tomorrow** - All due Sept 13`
+- **VERIFICATION**: Cross-reference with task analyzer output to ensure all individual tasks are captured
+- **SPRINT TASKS**: All current sprint tasks must be listed individually, not grouped or summarized

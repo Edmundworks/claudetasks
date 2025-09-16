@@ -32,26 +32,66 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
   - `email_summaries_YYYY_MM_DD.md`
   - `newsletter_digest_YYYY_MM_DD.md`
 
-### 3. Daily Planning
+### 3. Current Sprint Detection
+- **CRITICAL**: Query Sprint Database (19dc548c-c4ff-80db-a687-fade4b6cc149) to get current active sprint
+- **Filter**: Use "Is Current" formula property to find today's active sprint
+- **Dynamic ID**: Extract current sprint ID for use in all task creation (NEVER use cached IDs)
+- **Purpose**: Ensure all daily tasks are created in the actual current sprint
+
+### 4. Daily Todo Processing
+- **Source**: Query Current Daily Todos Notion page (26fc548cc4ff80c787bfcac0369bec44)
+- **Process**: Read all todos from the page content and interpret as workflow instructions
+- **Workflow Execution**: For each todo item, execute the instruction to create specific actionable tasks:
+  - **Example Input**: "Go through all jobs in job pipeline, for those in Onboarding or Activating create a todo for me to chase them and mention the company name"
+  - **Example Output**: Multiple tasks like "Chase up Newton", "Chase up GigaML", "Chase up Blocksight" etc.
+  - **Direct Tasks**: Simple todos like "Send 50 LinkedIn connections" create one task as written
+  - **Workflow Tasks**: Complex instructions get executed to create multiple specific tasks
+- **EXECUTION PROTOCOL**:
+  1. **Pre-execution Count**: For workflow instructions, query source database first to determine expected task count
+  2. **Execute**: Create individual tasks as specified
+  3. **Post-execution Verification**: Count created tasks and verify against expected count
+  4. **Report**: Log "Created X of Y expected tasks" for each workflow instruction
+  5. **Error Handling**: If count mismatch, report discrepancy and list what was/wasn't created
+- **Create Tasks**: For each specific actionable task, create individual work task in Work Task Database (181c548c-c4ff-80ba-8a01-f3ed0b4a7fef):
+  - Task name: [Specific actionable task name, NOT the instruction text]
+  - Tag: Appropriate tag based on content (Build, Serve, Sell, Admin, etc.)
+  - Assign to Edmund (6ae517a8-2360-434b-9a29-1cbc6a427147)
+  - Link to current sprint: **USE DYNAMIC SPRINT ID FROM STEP 3**
+  - Due date: Today (unless specified otherwise in todo)
+  - Status: "Not started"
+- **Integration**: Include these executed daily todo tasks in daily planning context
+
+### 5. Client Task Generation
+- Query Job Pipeline database (20ac548cc4ff80ee9628e09d72900f10) for clients in "Activating" and "Onboarding" status
+- For each active client, create work todo in Work Task Database (181c548c-c4ff-80ba-8a01-f3ed0b4a7fef):
+  - Task name: "Follow up with [Client Name] - [Status]"
+  - Tag: "Serve" (customer service)
+  - Assign to Edmund (6ae517a8-2360-434b-9a29-1cbc6a427147)
+  - Link to current sprint: **USE DYNAMIC SPRINT ID FROM STEP 3**
+  - Due date: Today + 1 day
+  - Status: "Not started"
+- Include these client tasks in daily planning context
+
+### 6. Daily Planning
 - Use Agent: `daily-planning`
 - Pulls calendar events from both calendars
 - Runs task analyzers for work and personal tasks
-- Integrates email insights
+- Integrates email insights and client tasks
 - Creates comprehensive daily schedule
 - Output: `daily_schedule_YYYY-MM-DD.md`
 
-### 4. Sprint Information Update
-- Query current active sprint from Notion
-- Check if CLAUDE.md sprint information is current
-- If today is Tuesdat, execute standup notes using `sprint-planning-agent`
+### 7. Sprint Information Update
+- Sprint information already retrieved in Step 3 (current sprint detection)
+- If today is Tuesday, execute standup notes using `sprint-planning-agent`
 - Update CLAUDE.md if outdated with:
-  - Sprint name and ID
+  - Sprint name and ID (from Step 3 dynamic query)
   - Sprint date range
   - Sprint goal
 
-### 5. Standup Notes Generation (Workdays Only)
+### 8. Standup Notes Generation (Workdays Only)
 - If today is Monday, Wednesday, Thursday, Friday, execute standup notes using `daily-standup-notes-agent`
 - Uses daily schedule and previous day's completions as context
+- Includes client follow-up tasks in standup agenda
 - Generates formatted standup notes
 - Output: `standup_notes_YYYY-MM-DD.md`
 
@@ -74,9 +114,12 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 
 ## Execution Order & Dependencies
 1. **Email Triage** → No dependencies, produces email + newsletter files
-2. **Daily Planning** → Reads email summary, produces schedule file
-3. **Sprint Update** → Checks/updates CLAUDE.md
-4. **Standup Notes** → Reads schedule file, produces standup notes
+2. **Current Sprint Detection** → Query Sprint Database for active sprint ID
+3. **Daily Todo Processing** → Uses dynamic sprint ID from step 2, creates individual work todos
+4. **Client Task Generation** → Uses dynamic sprint ID from step 2, creates work todos
+5. **Daily Planning** → Reads email summary + daily todos + client tasks, produces schedule file
+6. **Sprint Update** → Sprint info already retrieved in step 2
+7. **Standup Notes** → Reads schedule file, produces standup notes
 
 ## Time Considerations
 - **Best Run Time**: 9:00am-10:00am ET
@@ -94,12 +137,43 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - Email inbox properly triaged
 - Daily schedule reflects accurate state
 - Standup notes ready before 11:00am on workdays
+- **Task Creation Verification**: All workflow instructions executed with correct task counts
+- **Execution Summary**: Clear report of what was created vs expected
+
+## Validation & Reporting
+After completing all workflow instructions, provide an execution summary:
+
+### Task Creation Report Format:
+```
+DAILY TODO EXECUTION SUMMARY:
+================================
+
+Workflow Instructions Processed: X
+Direct Tasks Created: Y
+Database Tasks Created: Z
+
+DETAILED BREAKDOWN:
+- Job Pipeline Chase-ups: Created 11 of 11 expected tasks ✅
+- LinkedIn Connections: Created 1 of 1 expected tasks ✅  
+- [Other workflows]: Created X of Y expected tasks ✅/❌
+
+TOTAL VERIFICATION:
+- Expected tasks: XX
+- Created tasks: YY  
+- Status: ✅ COMPLETE / ❌ INCOMPLETE
+
+ERRORS (if any):
+- [List any count mismatches or failed creations]
+```
 
 ## Example Execution
 
 When you run this command, I will:
 
 1. First, run **`email-preprocessor`** agent then **`daily-email-triage-agent`** agent to process your inbox and extract newsletter content
-2. Then, run **`daily-planning-agent`** agent to generate your daily schedule incorporating urgent emails and tasks
-3. Update sprint information by using **`sprint-planning-agent`** if it's Tuesday
-4. Finally, run **`daily-standup-notes-agent`** if it's a Monday, Wednesday, Thursday and Friday
+2. Query the **Sprint Database** to get the current active sprint ID (never use cached values)
+3. Query your **Current Daily Todos** Notion page and create individual work tasks for each todo in the current sprint
+4. Query Job Pipeline database for "Activating" and "Onboarding" clients and create follow-up tasks
+5. Then, run **`daily-planning-agent`** agent to generate your daily schedule incorporating urgent emails, daily todos, and client follow-ups
+6. Update sprint information by using **`sprint-planning-agent`** if it's Tuesday
+7. Finally, run **`daily-standup-notes-agent`** if it's a Monday, Wednesday, Thursday and Friday (includes all tasks in agenda)

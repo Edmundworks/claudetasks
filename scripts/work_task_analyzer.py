@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
 Work Task Manager - Notion Integration
-Analyzes work tasks from Notion TODO database and generates reports.
+Analyzes work tasks from Notion Tasks database and generates reports.
 
 Usage:
     python work_task_analyzer.py
 
-Database ID: [YOUR_WORK_TASK_DATABASE_ID] (TODO Database)
+Database ID: 181c548c-c4ff-80ba-8a01-f3ed0b4a7fef (Tasks Database)
+
+Note: Database now uses 'status' type for Checkbox field with values:
+  - "Done" (completed)
+  - "In progress" (active)
+  - "Not started" (pending)
 """
 
 import os
@@ -23,11 +28,11 @@ class WorkTaskAnalyzer:
     """Analyzes work tasks and generates actionable reports."""
 
     # Class constants
-    TODO_DATABASE_ID = "[YOUR_WORK_TASK_DATABASE_ID]"
-    ALL_SPRINTS_DATABASE_ID = "[YOUR_ALL_SPRINTS_DATABASE_ID]"
-    MEETINGS_DATABASE = "[YOUR_MEETINGS_DATABASE_ID]"
-    YOUR_NAME_USER_ID = "[YOUR_NOTION_USER_ID]"
-    TEAM_MEMBER_USER_ID = "[TEAM_MEMBER_NOTION_USER_ID]"
+    TODO_DATABASE_ID = "181c548cc4ff80ba8a01f3ed0b4a7fef"
+    ALL_SPRINTS_DATABASE_ID = "19dc548c-c4ff-80db-a687-fade4b6cc149"
+    MEETINGS_DATABASE = "ffb146137c57480fbbede09cfd7ae309"
+    XIANG_USER_ID = "1bad872b-594c-8117-b3e5-0002d3edb7d3"
+    EDMUND_USER_ID = "b4e42bdb-0be3-43b5-a7a8-aed83917d282"
 
     TAG_EMOJIS = {
         "Build": "🛠️",
@@ -152,16 +157,21 @@ class WorkTaskAnalyzer:
             return ""
 
     def query_work_tasks(self) -> tuple[Dict, Optional[Dict]]:
-        """Query work tasks for current sprint from TODO database."""
+        """Query work tasks for current sprint from Tasks database."""
         try:
             # First find the current sprint
             current_sprint = self.find_current_sprint()
             if not current_sprint:
                 print("No current sprint found, querying all incomplete tasks")
-                # Fallback: query all incomplete tasks
+                # Fallback: query all incomplete tasks (Not started or In progress)
                 response = self.notion.databases.query(
                     database_id=self.TODO_DATABASE_ID,
-                    filter={"property": "Checkbox", "checkbox": {"equals": False}},
+                    filter={
+                        "or": [
+                            {"property": "Status", "status": {"equals": "Not started"}},
+                            {"property": "Status", "status": {"equals": "In progress"}},
+                        ]
+                    },
                 )
                 return response, None
 
@@ -174,7 +184,12 @@ class WorkTaskAnalyzer:
                             "property": "Sprint",
                             "relation": {"contains": current_sprint["id"]},
                         },
-                        {"property": "Checkbox", "checkbox": {"equals": False}},
+                        {
+                            "or": [
+                                {"property": "Status", "status": {"equals": "Not started"}},
+                                {"property": "Status", "status": {"equals": "In progress"}},
+                            ]
+                        },
                     ]
                 },
             )
@@ -199,8 +214,14 @@ class WorkTaskAnalyzer:
         # Extract task name
         name = self._extract_text_property(properties, ["Name"])
 
-        # Extract completion status
-        completed = self._extract_checkbox_property(properties, "Checkbox")
+        # Extract completion status (now using status type)
+        completed = self._extract_checkbox_property(properties, "Status")
+        
+        # Extract actual status for more detail if needed
+        status_prop = properties.get("Status", {})
+        status = "Not started"
+        if status_prop.get("type") == "status" and status_prop.get("status"):
+            status = status_prop["status"].get("name", "Not started")
 
         # Extract due date
         due_date = self._extract_date_property(properties, ["Due Date"])
@@ -213,15 +234,40 @@ class WorkTaskAnalyzer:
 
         # Extract person/assignee
         person = self._extract_people_property(properties, ["Person"])
+        
+        # Extract new rollup fields
+        current_prop = properties.get("Current", {})
+        is_current = False
+        if current_prop.get("type") == "rollup" and current_prop.get("rollup"):
+            rollup = current_prop["rollup"]
+            if rollup.get("type") == "number":
+                is_current = rollup.get("number", 0) == 1
+        
+        sprint_range_prop = properties.get("Sprint Range", {})
+        sprint_range = None
+        if sprint_range_prop.get("type") == "rollup" and sprint_range_prop.get("rollup"):
+            rollup = sprint_range_prop["rollup"]
+            if rollup.get("type") == "array" and rollup.get("array"):
+                for item in rollup["array"]:
+                    if item.get("type") == "date" and item.get("date"):
+                        date_obj = item["date"]
+                        sprint_range = {
+                            "start": self.parse_date(date_obj.get("start")),
+                            "end": self.parse_date(date_obj.get("end"))
+                        }
+                        break
 
         return {
             "id": page["id"],
             "name": name,
             "completed": completed,
+            "status": status,  # Add actual status field
             "due_date": due_date,
             "tags": tags,
             "sprint": sprint,
             "person": person,
+            "is_current": is_current,  # New field
+            "sprint_range": sprint_range,  # New field
             "url": page.get("url", ""),
         }
 
@@ -234,10 +280,12 @@ class WorkTaskAnalyzer:
         return "Unnamed Task"
 
     def _extract_checkbox_property(self, properties: Dict, prop_name: str) -> bool:
-        """Extract checkbox value."""
+        """Extract checkbox/status value - now using status type."""
         prop = properties.get(prop_name, {})
-        if prop.get("type") == "checkbox":
-            return prop.get("checkbox", False)
+        if prop.get("type") == "status":
+            status = prop.get("status", {})
+            status_name = status.get("name", "Not started")
+            return status_name == "Done"
         return False
 
     def _extract_date_property(
@@ -322,11 +370,7 @@ class WorkTaskAnalyzer:
         return max(0, (self.today - due_date).days)
 
     def format_task(
-        self,
-        task: Dict,
-        show_overdue_days: bool = False,
-        show_person: bool = False,
-        show_id: bool = False,
+        self, task: Dict, show_overdue_days: bool = False, show_person: bool = False, show_id: bool = False
     ) -> str:
         """Format a task for display."""
         tag_emojis = [self.TAG_EMOJIS.get(tag, "📌") for tag in task["tags"]]
@@ -350,9 +394,7 @@ class WorkTaskAnalyzer:
 
         return formatted
 
-    def generate_report(
-        self, task_data: List[Dict], current_sprint: Optional[Dict] = None
-    ) -> str:
+    def generate_report(self, task_data: List[Dict], current_sprint: Optional[Dict] = None) -> str:
         """Generate comprehensive work task analysis report."""
         # Process and categorize tasks
         tasks = [self.extract_task_data(page) for page in task_data]
@@ -385,9 +427,7 @@ class WorkTaskAnalyzer:
 
         return "\n".join(sections)
 
-    def _add_current_sprint_section(
-        self, sections: List[str], current_sprint: Optional[Dict]
-    ):
+    def _add_current_sprint_section(self, sections: List[str], current_sprint: Optional[Dict]):
         """Add current sprint information to report."""
         if current_sprint:
             try:
@@ -395,10 +435,8 @@ class WorkTaskAnalyzer:
                 name_prop = current_sprint["properties"].get("Name", {})
                 sprint_name = "Unknown Sprint"
                 if name_prop.get("type") == "title" and name_prop.get("title"):
-                    sprint_name = name_prop["title"][0].get(
-                        "plain_text", "Unknown Sprint"
-                    )
-
+                    sprint_name = name_prop["title"][0].get("plain_text", "Unknown Sprint")
+                
                 # Extract sprint dates
                 date_prop = current_sprint["properties"].get("Date", {})
                 date_range_str = ""
@@ -411,6 +449,7 @@ class WorkTaskAnalyzer:
 
                 sections.append("## 🎯 CURRENT SPRINT")
                 sections.append(f"**{sprint_name}**{date_range_str}")
+                sections.append(f"*Sprint ID: {current_sprint['id']}*")
                 sections.append("")
             except Exception as e:
                 print(f"Error adding current sprint section: {e}")
@@ -492,9 +531,7 @@ class WorkTaskAnalyzer:
                 weekly_tasks, key=lambda x: x["due_date"] or self.today
             )
             for task in sorted_tasks:
-                sections.append(
-                    f"• {self.format_task(task, show_person=True, show_id=True)}"
-                )
+                sections.append(f"• {self.format_task(task, show_person=True, show_id=True)}")
             sections.append("")
 
     def _add_person_breakdown(self, sections: List[str], person_dict: Dict):
@@ -502,7 +539,7 @@ class WorkTaskAnalyzer:
         if person_dict:
             sections.append("## 👥 BY PERSON")
             for person, person_tasks in sorted(person_dict.items()):
-                person_emoji = "🧑‍💻" if "Your Name" in person else "🧑‍💼"
+                person_emoji = "🧑‍💻" if "Xiang" in person else "🧑‍💼"
                 overdue_count = len(
                     [
                         t

@@ -73,15 +73,6 @@ archive/standup_notes/*
 !archive/daily_schedules/.gitkeep
 !archive/standup_notes/.gitkeep
 
-# Daily generated files (root level)
-email_summaries_*.md
-newsletter_digest_*.md
-daily_schedule_*.md
-standup_notes_*.md
-
-# Sprint files
-*_sprint.md
-*_week*_sprint.md
 
 # Backup files
 *.bak
