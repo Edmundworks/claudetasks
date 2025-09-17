@@ -28,6 +28,10 @@ Use these deep links when creating tasks to make them immediately actionable:
 - **Terminal/Commands**: [Local terminal]
 
 ## Client Management
+- **Job Pipeline Database**: https://www.notion.so/super-ats/20ac548cc4ff80ee9628e09d72900f10?v=20ac548cc4ff8011a37b000c6e52b6c4
+- **Individual Company Pages**: Direct links to specific company Job Pipeline entries
+  - *Example: Newton - https://www.notion.so/super-ats/Newton-26bc548cc4ff805db41be4124b7b4ecc*
+  - *Example: Scanner.dev - [Get from Job Pipeline query results]*
 - **Customer Dashboard**: [Add customer management tool URL]
 - **Support Portal**: [Add support system URL]
 
@@ -51,8 +55,17 @@ Links:
 - LinkedIn: https://www.linkedin.com/mynetwork/invite-connect/connections/
 ```
 
+*Company Chase-up Task:*
+```
+Task: "Chase up Newton"
+Description: "Follow up with Newton on onboarding progress"  
+Links:
+- Job Pipeline: https://www.notion.so/super-ats/Newton-26bc548cc4ff805db41be4124b7b4ecc
+```
+
 *Daily Schedule Format:*
 ```
+- [ ] **[Chase up Newton](https://notion.so/task-id)** - Onboarding follow-up | [Newton Job](https://www.notion.so/super-ats/Newton-26bc548cc4ff805db41be4124b7b4ecc)
 - [ ] **[Send LinkedIn connections](https://notion.so/task-id)** - 50 prospects via Apollo | [Apollo](https://app.apollo.io/#/tasks?dateRange[max]=2025-09-16&sortByField=task_due_at&sortAscending=true) | [LinkedIn](https://www.linkedin.com/mynetwork/invite-connect/connections/)
 ```
 

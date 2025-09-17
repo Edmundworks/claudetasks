@@ -49,9 +49,10 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - **EXECUTION PROTOCOL**:
   1. **Pre-execution Count**: For workflow instructions, query source database first to determine expected task count
   2. **Execute**: Create individual tasks as specified
-  3. **Post-execution Verification**: Count created tasks and verify against expected count
-  4. **Report**: Log "Created X of Y expected tasks" for each workflow instruction
-  5. **Error Handling**: If count mismatch, report discrepancy and list what was/wasn't created
+  3. **Company Task Enhancement**: For company-related tasks (e.g., "Chase up Newton"), automatically include Job Pipeline deep link in task description using the company's Notion page URL
+  4. **Post-execution Verification**: Count created tasks and verify against expected count
+  5. **Report**: Log "Created X of Y expected tasks" for each workflow instruction
+  6. **Error Handling**: If count mismatch, report discrepancy and list what was/wasn't created
 - **Create Tasks**: For each specific actionable task, create individual work task in Work Task Database (181c548c-c4ff-80ba-8a01-f3ed0b4a7fef):
   - Task name: [Specific actionable task name, NOT the instruction text]
   - **Include relevant deep links in task description**:
@@ -59,6 +60,7 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
     - LinkedIn messages: https://www.linkedin.com/messaging/
     - Apollo prospecting: https://app.apollo.io/#/tasks?dateRange[max]=YYYY-MM-DD&sortByField=task_due_at&sortAscending=true (replace YYYY-MM-DD with today's date)
     - Email follow-ups: https://mail.google.com/mail/u/0/#inbox
+    - **Company-specific tasks**: When creating tasks like "Chase up [Company]", include the company's Job Pipeline page URL from the query results
   - Tag: Appropriate tag based on content (Build, Serve, Sell, Admin, etc.)
   - Assign to Edmund (6ae517a8-2360-434b-9a29-1cbc6a427147)
   - Link to current sprint: **USE DYNAMIC SPRINT ID FROM STEP 3**
