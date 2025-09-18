@@ -38,21 +38,63 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - **Dynamic ID**: Extract current sprint ID for use in all task creation (NEVER use cached IDs)
 - **Purpose**: Ensure all daily tasks are created in the actual current sprint
 
-### 4. Daily Todo Processing
+### 4. Daily Todo Processing - ENHANCED TWO-PASS SYSTEM
+
+#### **PHASE 1: SECTION-BY-SECTION PARSING**
 - **Source**: Query Current Daily Todos Notion page (26fc548cc4ff80c787bfcac0369bec44)
-- **Process**: Read all todos from the page content and interpret as workflow instructions
-- **Workflow Execution**: For each todo item, execute the instruction to create specific actionable tasks:
-  - **Example Input**: "Go through all jobs in job pipeline, for those in Onboarding or Activating create a todo for me to chase them and mention the company name"
-  - **Example Output**: Multiple tasks like "Chase up Newton", "Chase up GigaML", "Chase up Blocksight" etc.
-  - **Direct Tasks**: Simple todos like "Send 50 LinkedIn connections" create one task as written
-  - **Workflow Tasks**: Complex instructions get executed to create multiple specific tasks
-- **EXECUTION PROTOCOL**:
-  1. **Pre-execution Count**: For workflow instructions, query source database first to determine expected task count
-  2. **Execute**: Create individual tasks as specified
-  3. **Company Task Enhancement**: For company-related tasks (e.g., "Chase up Newton"), automatically include Job Pipeline deep link in task description using the company's Notion page URL
-  4. **Post-execution Verification**: Count created tasks and verify against expected count
-  5. **Report**: Log "Created X of Y expected tasks" for each workflow instruction
-  6. **Error Handling**: If count mismatch, report discrepancy and list what was/wasn't created
+- **Enhanced Content Analysis**: Parse page content into distinct sections:
+  - **SECTION 1**: "Create daily tasks" (numbered list items 1-N) → DIRECT TASKS (1:1 creation)
+  - **SECTION 2**: "Follow these workflows" → WORKFLOW INSTRUCTIONS (execute to create multiple derived tasks)
+- **Verification Checkpoint**: Before proceeding, output parsing summary:
+  ```
+  PARSING VERIFICATION REPORT:
+  📋 Found X direct daily tasks (items 1-X)
+  🔄 Found Y workflow instructions  
+  📊 Expected total individual tasks: X + (estimated derived tasks from workflows)
+  ```
+
+#### **PHASE 2: TWO-PASS TASK CREATION**
+
+**PASS 1: DIRECT TASK CREATION (1:1 Mapping)**
+- **Input**: Numbered list items from "Create daily tasks" section
+- **Process**: Create exactly ONE task for each numbered item, using the EXACT text as task name
+- **Examples**: 
+  - "Send LinkedIn connections to 50 prospects in Apollo" → 1 task with that exact name
+  - "Comment on post as Li" → 1 task with that exact name
+- **Verification**: Count created tasks = count of numbered items in section 1
+
+**PASS 2: WORKFLOW EXECUTION (Database Queries → Multiple Tasks)**
+- **Input**: Instructions from "Follow these workflows" section
+- **Process**: Execute each workflow instruction to create multiple derived tasks
+- **Examples**:
+  - "Chase up clients" → Query Job Pipeline (Onboarding/Activating) → Create individual "Chase up [Company]" tasks
+  - "Check enrollments" → Query Job Pipeline (In Progress) → Create individual "Check enrollment [Company]" tasks
+- **Pre-execution Protocol**: For each workflow, query source database first to determine expected task count
+- **Post-execution Verification**: Count created tasks and verify against expected count
+
+#### **PHASE 3: COMPREHENSIVE VERIFICATION**
+- **Task Count Audit**: 
+  ```
+  TASK CREATION VERIFICATION REPORT:
+  ================================
+  PHASE 1 - DIRECT TASKS:
+  - Expected: X (from parsing)
+  - Created: Y 
+  - Status: ✅ COMPLETE / ❌ INCOMPLETE
+
+  PHASE 2 - WORKFLOW TASKS:
+  - Workflow 1 "Chase up clients": Created Z of W expected ✅/❌
+  - Workflow 2 "Check enrollments": Created A of B expected ✅/❌
+  
+  TOTAL VERIFICATION:
+  - Total expected: X + W + B = TOTAL
+  - Total created: Y + Z + A = ACTUAL
+  - Status: ✅ COMPLETE / ❌ INCOMPLETE
+  
+  ERRORS (if any): [List discrepancies]
+  ```
+- **Stop-gate**: Do NOT proceed to daily planning until verification shows ✅ COMPLETE
+- **Error Handling**: If count mismatch, report discrepancy and list what was/wasn't created
 - **Create Tasks**: For each specific actionable task, create individual work task in Work Task Database (181c548c-c4ff-80ba-8a01-f3ed0b4a7fef):
   - Task name: [Specific actionable task name, NOT the instruction text]
   - **Include relevant deep links in task description**:
@@ -119,12 +161,18 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 └── standup_notes/
 ```
 
-## Execution Order & Dependencies
+## Execution Order & Dependencies - ENHANCED WORKFLOW
 1. **Email Triage** → No dependencies, produces email + newsletter files
 2. **Current Sprint Detection** → Query Sprint Database for active sprint ID
-3. **Daily Todo Processing** → Uses dynamic sprint ID from step 2, creates individual work todos
-4. **Client Task Generation** → Uses dynamic sprint ID from step 2, creates work todos
-5. **Daily Planning** → Reads email summary + daily todos + client tasks, produces schedule file
+3. **Daily Todo Processing - ENHANCED TWO-PASS SYSTEM**:
+   - **PHASE 1: Section-by-Section Parsing** → Parse Daily Todos page into sections
+   - **PHASE 2: Two-Pass Task Creation**:
+     - **PASS 1**: Direct Task Creation (1:1 mapping from numbered list)
+     - **PASS 2**: Workflow Execution (database queries → multiple derived tasks)
+   - **PHASE 3: Comprehensive Verification** → Verify all tasks created before proceeding
+   - **STOP-GATE**: Do NOT proceed to step 4 until verification shows ✅ COMPLETE
+4. **Client Task Generation** → DEPRECATED (now handled in Daily Todo Processing Phase 2)
+5. **Daily Planning** → Reads email summary + ALL verified tasks, produces schedule file
 6. **Sprint Update** → Sprint info already retrieved in step 2
 7. **Standup Notes** → Reads schedule file, produces standup notes
 
@@ -138,49 +186,77 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - Failed calendar sync: Use cached events
 - Failed Notion query: Use CLAUDE.md as fallback
 
-## Success Criteria
+## Success Criteria - ENHANCED
 - All components execute successfully
-- No duplicate calendar events created
+- No duplicate calendar events created  
 - Email inbox properly triaged
 - Daily schedule reflects accurate state
 - Standup notes ready before 11:00am on workdays
-- **Task Creation Verification**: All workflow instructions executed with correct task counts
-- **Execution Summary**: Clear report of what was created vs expected
+- **CRITICAL**: Two-pass task creation verification shows ✅ COMPLETE before proceeding
+- **Enhanced Parsing**: Section-by-section analysis completed with verification checkpoint
+- **Task Adherence**: All direct daily tasks created 1:1 from numbered list
+- **Workflow Execution**: All workflow instructions executed with correct derived task counts
 
-## Validation & Reporting
-After completing all workflow instructions, provide an execution summary:
+## Validation & Reporting - ENHANCED VERIFICATION
+**MANDATORY**: After completing Daily Todo Processing Phase 3, provide comprehensive verification:
 
-### Task Creation Report Format:
+### Enhanced Task Creation Report Format:
 ```
-DAILY TODO EXECUTION SUMMARY:
-================================
+DAILY TODO PROCESSING - VERIFICATION REPORT:
+============================================
 
-Workflow Instructions Processed: X
-Direct Tasks Created: Y
-Database Tasks Created: Z
+PHASE 1 - PARSING VERIFICATION:
+📋 Direct daily tasks found: X (numbered items 1-X)
+🔄 Workflow instructions found: Y
+📊 Total expected individual tasks: X + (estimated derived)
 
-DETAILED BREAKDOWN:
-- Job Pipeline Chase-ups: Created 11 of 11 expected tasks ✅
-- LinkedIn Connections: Created 1 of 1 expected tasks ✅  
-- [Other workflows]: Created X of Y expected tasks ✅/❌
+PHASE 2 - TASK CREATION RESULTS:
+PASS 1 - DIRECT TASKS (1:1 mapping):
+- Expected: X direct tasks
+- Created: Y direct tasks
+- Status: ✅ COMPLETE / ❌ INCOMPLETE [STOP HERE IF INCOMPLETE]
 
-TOTAL VERIFICATION:
-- Expected tasks: XX
-- Created tasks: YY  
-- Status: ✅ COMPLETE / ❌ INCOMPLETE
+PASS 2 - WORKFLOW EXECUTION:
+- Workflow 1 "Chase up clients": Created A of B expected ✅/❌
+- Workflow 2 "Check enrollments": Created C of D expected ✅/❌
 
-ERRORS (if any):
-- [List any count mismatches or failed creations]
+PHASE 3 - COMPREHENSIVE VERIFICATION:
+- Total expected tasks: X + B + D = TOTAL
+- Total created tasks: Y + A + C = ACTUAL  
+- Verification status: ✅ COMPLETE / ❌ INCOMPLETE
+- Adherence score: ACTUAL/TOTAL = XX%
+
+ERRORS/DISCREPANCIES (if any):
+[List any missing or incorrect tasks]
+
+STOP-GATE DECISION:
+✅ PROCEED to Daily Planning (verification complete)
+❌ HALT (fix discrepancies before proceeding)
 ```
 
-## Example Execution
+## Example Execution - ENHANCED WORKFLOW
 
-When you run this command, I will:
+When you run this command, I will execute the **Enhanced Two-Pass System**:
 
-1. First, run **`email-preprocessor`** agent then **`daily-email-triage-agent`** agent to process your inbox and extract newsletter content
-2. Query the **Sprint Database** to get the current active sprint ID (never use cached values)
-3. Query your **Current Daily Todos** Notion page and create individual work tasks for each todo in the current sprint
-4. Query Job Pipeline database for "Activating" and "Onboarding" clients and create follow-up tasks
-5. Then, run **`daily-planning-agent`** agent to generate your daily schedule incorporating urgent emails, daily todos, and client follow-ups
-6. Update sprint information by using **`sprint-planning-agent`** if it's Tuesday
-7. Finally, run **`daily-standup-notes-agent`** if it's a Monday, Wednesday, Thursday and Friday (includes all tasks in agenda)
+### Phase 1: Foundation Setup
+1. Run **`email-preprocessor`** then **`daily-email-triage-agent`** to process inbox and extract newsletter content
+2. Query **Sprint Database** to get current active sprint ID (never use cached values)
+
+### Phase 2: Enhanced Daily Todo Processing
+3. **PHASE 1: Section-by-Section Parsing**
+   - Parse **Current Daily Todos** page into distinct sections
+   - Output verification checkpoint with task counts
+4. **PHASE 2: Two-Pass Task Creation**
+   - **PASS 1**: Create direct tasks 1:1 from numbered list (exact text mapping)
+   - **PASS 2**: Execute workflow instructions to create derived tasks from database queries  
+5. **PHASE 3: Comprehensive Verification**
+   - Verify all tasks created against expected counts
+   - Generate detailed verification report
+   - **STOP-GATE**: Halt if verification fails
+
+### Phase 3: Schedule Generation & Coordination  
+6. Run **`daily-planning-agent`** to generate daily schedule incorporating ALL verified tasks
+7. Update sprint information using **`sprint-planning-agent`** if Tuesday
+8. Run **`daily-standup-notes-agent`** if Monday/Wednesday/Thursday/Friday
+
+**Key Enhancement**: The new system prevents task omission through mandatory verification checkpoints and section-aware parsing.
