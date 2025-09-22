@@ -143,7 +143,7 @@ mcp__notion-mcp__API-patch-page({
    - Track deadlines and follow-ups for all tasks in one place
 
 3. **Daily Planning**
-   - Use `.claude/commands/daily-routine.md` command for comprehensive daily routine (includes email triage, planning, and standup notes)
+   - Use `.claude/agents/daily-routine.md` command for comprehensive daily routine (includes email triage, planning, and standup notes)
    - Individual planning: `.claude/commands/daily-planning.md` workflow for just daily schedules
    - Coordinate between calendar events and task priorities
    - Balance all commitments and priorities
@@ -296,7 +296,7 @@ For detailed information about Edmund's background, personal information, and co
 ## Personal Assistant Workflow
 
 ### Daily Routine Integration
-- **Automated Workflow**: Execute `.claude/commands/daily-routine.md` command file for full morning routine (NOT as an agent - run the command directly)
+- **Automated Workflow**: Execute `.claude/agents/daily-routine.md` command file for full morning routine (NOT as an agent - run the command directly)
 - **Profile Updates**: Use Task tool with `profile-updater` agent when Edmund shares information to remember
 - **Ad-hoc Assistance**: Use context from this CLAUDE.md for direct help
 
