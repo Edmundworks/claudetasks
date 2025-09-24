@@ -154,6 +154,21 @@ mcp__notion-mcp__API-patch-page({
    - Apply appropriate labels and archive noise to keep inbox focused
    - Forward important opportunities to relevant team members
 
+5. **Standup Notes (Workdays: Mon/Wed/Thu/Fri)**
+   - **FOCUS ON ROCKS NOT SAND**: Strategic priorities and blockers, NOT tactical task lists. 
+   - A rock is a large task that we both collaborate on, we need to brainstorm ideas and debate approaches to implementation
+   - a pebble is a smaller piece of work that probably just one of us is working. I should update Li on status of pebbles but most likely won't be discussing implementation
+   - sand is low level business as usual tasks, often recurring daily. Li doesn't need updates on these
+   - **Target Audience**: Xiang Li (CTO) needs strategic context, not task details
+   - **Key Content Areas**:
+     - Sprint progress and goal alignment
+     - Client health and business-critical issues
+     - High-value opportunities requiring team coordination
+     - Technical dependencies and strategic blockers
+     - Cross-team coordination needs
+   - **EXCLUDE**: Individual prospect tasks, LinkedIn activities, routine admin work
+   - **INCLUDE**: New client opportunities, deal pipeline updates, strategic initiatives
+
 ## Important Implementation Notes
 
 - **Sprint ID Format**: Always use dashes (e.g., `231c548c-c4ff-8041-8b43-e5fab2dfdb15`)
