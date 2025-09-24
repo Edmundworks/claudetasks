@@ -127,11 +127,29 @@ mcp__notion-mcp__API-patch-page({
 #### 4.2 Sprint Summary Generation
 - **File Creation**: `sprint_notes_week[#].md` in root directory
 - **Template Reference**: Use `/templates/sprint_planning_template.md` as structure guide
+
+**CRITICAL: Focus on 1-3 Strategic Themes, NOT Task Lists**
+
+Sprint planning should identify **strategic patterns and bottlenecks** inferred from data:
+
+### Strategic Theme Examples:
+- "Customer activation crisis: 8 companies stuck in onboarding, only 1 progressing weekly"
+- "Outbound volume collapse: 30+ connections below target, pipeline shrinking"
+- "Financial cash crunch: $53K in overdue invoices creating operational pressure"
+- "Engineering bottleneck: Customer requests backing up faster than resolution"
+- "Lead quality vs volume: Marketing generating quantity, sales struggling with conversion"
+
+### Theme Inference Sources:
+- **Task patterns**: Many chase-ups = activation issues
+- **Email patterns**: Customer complaints, payment delays, feature requests
+- **Sprint velocity**: Low completion = capacity constraints
+- **Metric trends**: Prospecting targets vs actual, conversion rates
+
 - **Content Structure** (4 Required Sections):
-  1. **Last Sprint Recap**: Completion metrics, major wins, carryover issues with clear priority mapping
-  2. **Sprint Goals**: [TM1_INITIALS]/[TM2_INITIALS]/META format with specific, measurable outcomes
-  3. **Sprint Theme Overview & Tasks**: Sprint theme narrative + task breakdown by priority (P0/P1/P2/META)
-  4. **Talk Points**: Critical decisions, revenue discussions, technical architecture, success metrics, team coordination
+  1. **Last Sprint Recap**: Brief completion metrics only
+  2. **Strategic Themes (1-3)**: Key bottlenecks/patterns inferred from data
+  3. **Sprint Goals**: [TM1_INITIALS]/[TM2_INITIALS]/META format with specific, measurable outcomes
+  4. **Critical Decisions**: Must-decide items for sprint success
 
 #### 4.3 CLAUDE.md Update
 - **Current Sprint Section**: Update with new sprint information

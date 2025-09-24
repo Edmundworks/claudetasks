@@ -169,6 +169,23 @@ Include relevant deep links in task descriptions:
 - **Email follow-ups**: https://mail.google.com/mail/u/0/#inbox
 - **Company-specific tasks**: Include Job Pipeline page URL from query results
 
+## Sprint Planning Notes Requirements
+
+For sprint planning notes generation, focus on **1-3 strategic themes** inferred from context, NOT task lists:
+
+### Strategic Theme Examples:
+- "Customer activation bottleneck: Only 3 of 11 onboarding companies progressing"
+- "Outbound volume declining: 30% below target, affecting pipeline"
+- "Engineering capacity constraint: Customer requests backing up"
+- "Financial pressure: $53K+ in pending invoices affecting cash flow"
+- "Marketing generating leads but sales conversion lagging"
+
+### Data Sources for Theme Inference:
+- Task patterns (many chase-ups = activation issues)
+- Email content (customer feedback, payment delays)
+- Sprint completion rates (low completion = capacity issues)
+- Prospecting metrics (connection targets vs actual)
+
 ## Usage Instructions
 
 ### Input Required

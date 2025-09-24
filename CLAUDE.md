@@ -41,12 +41,12 @@ You are an elite executive AI assistant for Edmund (Founder/CEO of Superposition
 - Edmund User ID: `6ae517a8-2360-434b-9a29-1cbc6a427147`
 - Xiang Li User ID: `1bad872b-594c-8117-b3e5-0002d3edb7d3`
 
-### Current Sprint (as of September 16, 2025)
-- Sprint: **Week 30** 
-- Sprint ID: `270c548c-c4ff-810a-a5aa-d150e7bca812`
-- Date Range: September 16-23, 2025
-- Sprint Theme: "Scale Prospecting While Maintaining Quality"
-- Goal: "EC: Continue high-velocity LinkedIn prospecting at 80+ outbounds/day while fixing critical customer issues, LX: Complete 3+ critical bug fixes and advance onboarding automation, META: Establish sustainable daily workflow"
+### Current Sprint (as of September 23, 2025)
+- Sprint: **Week 31**
+- Sprint ID: `277c548c-c4ff-81bd-a4c4-df9f8665ce9c`
+- Date Range: September 23-30, 2025
+- Sprint Theme: "To be defined in sprint planning meeting"
+- Goal: "To be defined in sprint planning meeting at 11:00 AM"
 - **Sprint Days**: Tuesday=Day 1, Wednesday=Day 2, Thursday=Day 3, Friday=Day 4, Saturday=Day 5, Sunday=Day 6, Monday=Day 7
 
 ## Task Management Instructions
