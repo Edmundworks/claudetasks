@@ -82,6 +82,18 @@ Parse the Current Daily Todos Notion page into distinct sections to distinguish 
    - Create individual "Check enrollments for [Company]" task for each result
    - **MANDATORY Properties**: Tags: "Serve", Person: Edmund (`6ae517a8-2360-434b-9a29-1cbc6a427147`), Sprint: Current Sprint ID, Due: Today, Status: "Not started"
 
+3. **"Process actionable emails"**:
+   - Read today's email_summaries_YYYY_MM_DD.md file to extract actionable items
+   - Create individual tasks for each actionable email requiring follow-up
+   - **Task Naming**: Use clear action-oriented names (e.g., "Respond to Sydney Liu introduction", "Follow up on IRS tax payment")
+   - **MANDATORY Properties**:
+     - Tags: Based on content ("Admin" for tax/legal, "Serve" for customer, "Sell" for business dev)
+     - Person: Edmund (`6ae517a8-2360-434b-9a29-1cbc6a427147`) unless specified otherwise
+     - Sprint: Current Sprint ID
+     - Due: Today
+     - Status: "Not started"
+   - **Include Gmail deep links** in task descriptions for immediate access
+
 **Query Filters**:
 - Onboarding/Activating: `{"or": [{"property": "Status", "status": {"equals": "Onboarding"}}, {"property": "Status", "status": {"equals": "Activating"}}]}`
 - In Progress: `{"property": "Status", "status": {"equals": "In Progress"}}`
