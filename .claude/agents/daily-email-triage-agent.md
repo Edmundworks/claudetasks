@@ -57,7 +57,6 @@ Process email triage results from email-preprocessor, apply manual labels, and g
 
 ### 6. Calendar Event Processing (if relevant emails found)
 - **Meeting invitations**: Check both calendars for conflicts before accepting/creating
-- **Appointment confirmations**: Verify calendar entry exists, create if missing
 - **Bill due dates**: Create calendar reminder (not task block) for payment deadlines
 - **MANDATORY CHECK**: Always query both calendars first using date ranges around the event
 - **Duplicate Prevention**: Compare subject, date, time before creating any calendar event
@@ -71,7 +70,33 @@ Standard email processing summary including:
 3. **Manual Processing**: Labels applied and additional archiving
 4. **Important Items**: Emails requiring immediate attention
 5. **Action Items**: Any follow-ups needed from email content
-6. **Date/Time Format**: Full date/time in Eastern Time (EDT/EST)
+6. **ACTIONABLE EMAILS FOR TASK CREATION**: Structured list for daily-tasks-agent
+7. **Date/Time Format**: Full date/time in Eastern Time (EDT/EST)
+
+**ACTIONABLE EMAILS FOR TASK CREATION Section Format:**
+```markdown
+## ACTIONABLE EMAILS FOR TASK CREATION
+
+### High Priority Tasks:
+1. **[Email Subject]** - [Brief description]
+   - Gmail Link: https://mail.google.com/mail/u/0/#inbox/[email_id]
+   - Suggested Tag: Admin/Serve/Sell/Build
+   - Action Required: [specific action verb + context]
+
+2. **[Email Subject]** - [Brief description]
+   - Gmail Link: https://mail.google.com/mail/u/0/#inbox/[email_id]
+   - Suggested Tag: Admin/Serve/Sell/Build
+   - Action Required: [specific action verb + context]
+
+### Medium Priority Tasks:
+[Same format for lower priority actionable emails]
+
+### Notes:
+- Only include emails requiring Edmund's action (not FYI items)
+- Exclude routine billing, newsletters, confirmations
+- Use clear action verbs: "Respond to", "Follow up on", "Review", "Schedule"
+- Tag suggestions based on content: Admin (internal/legal), Serve (customer), Sell (business dev), Build (technical)
+```
 
 #### File 2: newsletter_digest_YYYY_MM_DD.md
 Consolidated newsletter insights including:

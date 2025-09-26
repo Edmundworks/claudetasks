@@ -83,16 +83,21 @@ Parse the Current Daily Todos Notion page into distinct sections to distinguish 
    - **MANDATORY Properties**: Tags: "Serve", Person: Edmund (`6ae517a8-2360-434b-9a29-1cbc6a427147`), Sprint: Current Sprint ID, Due: Today, Status: "Not started"
 
 3. **"Process actionable emails"**:
-   - Read today's email_summaries_YYYY_MM_DD.md file to extract actionable items
-   - Create individual tasks for each actionable email requiring follow-up
-   - **Task Naming**: Use clear action-oriented names (e.g., "Respond to Sydney Liu introduction", "Follow up on IRS tax payment")
+   - Read today's email_summaries_YYYY_MM_DD.md file
+   - **Target Section**: "ACTIONABLE EMAILS FOR TASK CREATION" (structured by email-triage-agent)
+   - **Parse Structure**: Process both "High Priority Tasks" and "Medium Priority Tasks" subsections
+   - **Task Creation**: Create individual Notion task for each flagged email
+   - **Task Naming**: Use "Action Required" text from email summary as task name
    - **MANDATORY Properties**:
-     - Tags: Based on content ("Admin" for tax/legal, "Serve" for customer, "Sell" for business dev)
+     - Tags: Use "Suggested Tag" from email summary (Admin/Serve/Sell/Build)
      - Person: Edmund (`6ae517a8-2360-434b-9a29-1cbc6a427147`) unless specified otherwise
      - Sprint: Current Sprint ID
      - Due: Today
      - Status: "Not started"
-   - **Include Gmail deep links** in task descriptions for immediate access
+   - **Task Body/Description**: MUST include Gmail deep link from email summary in Notion task content
+     - Format: "📧 [View Email](https://mail.google.com/mail/u/0/#inbox/[email_id])"
+     - Makes tasks clickable back to original email from Notion interface
+   - **Skip Routine Items**: Email-triage-agent already filtered out billing/newsletters/confirmations
 
 **Query Filters**:
 - Onboarding/Activating: `{"or": [{"property": "Status", "status": {"equals": "Onboarding"}}, {"property": "Status", "status": {"equals": "Activating"}}]}`
