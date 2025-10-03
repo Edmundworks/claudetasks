@@ -1,6 +1,7 @@
 ---
+type: agent
+name: daily-tasks-agent
 description: Create daily tasks using Enhanced Two-Pass System with comprehensive verification
-allowed-tools: Task, mcp__notion-mcp__*, Read
 ---
 
 # Daily Tasks Agent
