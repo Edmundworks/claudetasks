@@ -21,22 +21,25 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - Determine if it's a workday (Monday-Friday)
 - Store date in format YYYY-MM-DD for file operations
 
-### 2. Email Processing
-- Use Agent: `daily-email-triage` and `email-preprocessor`
-- Processes both work and personal emails
-- Use `email-preprocessor` first to do the inital sweap, then pass the context to `daily-email-triage` for detailed triaging
-- Archives routine/marketing emails
-- Applies manual labels to important emails
-- Extracts newsletter content
-- Outputs:
-  - `email_summaries_YYYY_MM_DD.md`
-  - `newsletter_digest_YYYY_MM_DD.md`
-
-### 3. Current Sprint Detection
+### 2. Current Sprint Detection (MOVED BEFORE EMAIL PROCESSING)
 - **CRITICAL**: Query Sprint Database (19dc548c-c4ff-80db-a687-fade4b6cc149) to get current active sprint
 - **Filter**: Use "Is Current" formula property to find today's active sprint
 - **Dynamic ID**: Extract current sprint ID for use in all task creation (NEVER use cached IDs)
 - **Purpose**: Ensure all daily tasks are created in the actual current sprint
+- **IMPORTANT**: Sprint ID must be retrieved BEFORE email processing to enable task creation from emails
+
+### 3. Email Processing (WITH TASK CREATION)
+- Use Agent: `daily-email-triage` and `email-preprocessor`
+- Processes both work and personal emails
+- Use `email-preprocessor` first to do the initial sweep, then pass the context AND current sprint ID to `daily-email-triage` for detailed triaging
+- Archives routine/marketing emails
+- Applies manual labels to important emails
+- **NEW: Creates Notion tasks for actionable emails with Gmail deep links**
+- Extracts newsletter content
+- Outputs:
+  - `email_summaries_YYYY_MM_DD.md` (includes Notion tasks created)
+  - `newsletter_digest_YYYY_MM_DD.md`
+  - Notion tasks in Work Task Database with email links
 
 ### 4. Daily Todo Processing - Use Daily Tasks Agent
 
@@ -92,11 +95,11 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 ```
 
 ## Execution Order & Dependencies - SIMPLIFIED WORKFLOW
-1. **Email Triage** → No dependencies, produces email + newsletter files
-2. **Current Sprint Detection** → Query Sprint Database for active sprint ID  
+1. **Current Sprint Detection** → Query Sprint Database for active sprint ID (needed by email triage)
+2. **Email Triage** → Uses sprint ID to create tasks from actionable emails, produces email + newsletter files + Notion tasks
 3. **Daily Todo Processing** → Use `daily-tasks-agent` with Enhanced Two-Pass System
-4. **Daily Planning** → Reads email summary + ALL verified tasks, produces schedule file
-5. **Sprint Update** → Sprint info already retrieved in step 2
+4. **Daily Planning** → Reads email summary + ALL verified tasks (including email tasks), produces schedule file
+5. **Sprint Update** → Sprint info already retrieved in step 1
 6. **Standup Notes** → Reads schedule file, produces standup notes
 
 ## Time Considerations
@@ -162,8 +165,11 @@ STOP-GATE DECISION:
 When you run this command, I will execute the **Simplified Agent-Based Workflow**:
 
 ### Phase 1: Foundation Setup
-1. Run **`email-preprocessor`** then **`daily-email-triage-agent`** to process inbox and extract newsletter content
-2. Query **Sprint Database** to get current active sprint ID (never use cached values)
+1. Query **Sprint Database** to get current active sprint ID (never use cached values)
+2. Run **`email-preprocessor`** then **`daily-email-triage-agent`** (with sprint ID) to:
+   - Process inbox and extract newsletter content
+   - Create Notion tasks for actionable emails with Gmail deep links
+   - Archive routine emails
 
 ### Phase 2: Daily Todo Processing  
 3. Run **`daily-tasks-agent`** to execute Enhanced Two-Pass System with:
