@@ -1,0 +1,26 @@
+# Paste or merge this into ~/.codex/config.toml under the top-level (root).
+# It mirrors the MCP servers defined in .mcp.json for Codex CLI.
+
+[mcp_servers.notion-mcp]
+command = "npx"
+args = ["-y", "@notionhq/notion-mcp-server"]
+# IMPORTANT: Codex does not interpolate env variables inside values.
+# Two options:
+#   1) Replace ${NOTION_TOKEN} below with your actual token value, or
+#   2) Ensure NOTION_TOKEN is in your shell environment and manually set
+#      OPENAPI_MCP_HEADERS before launching Codex.
+# This sets the same OPENAPI_MCP_HEADERS used in .mcp.json.
+[mcp_servers.notion-mcp.env]
+OPENAPI_MCP_HEADERS = "{ \"Authorization\": \"Bearer ${NOTION_TOKEN}\", \"Notion-Version\": \"2022-06-28\" }"
+
+# Optionally propagate NOTION_TOKEN to the server environment directly, if needed.
+[mcp_servers.notion-mcp]
+env_vars = ["NOTION_TOKEN"]
+
+[mcp_servers.mcp-gsuite]
+command = "uv"
+args = ["--directory", "gsuite-mcp", "run", "mcp-gsuite-enhanced"]
+[mcp_servers.mcp-gsuite.env]
+PYTHONPATH = "gsuite-mcp"
+UV_PROJECT_ENVIRONMENT = "gsuite-mcp/.venv"
+

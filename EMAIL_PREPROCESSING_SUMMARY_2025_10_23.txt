@@ -1,0 +1,71 @@
+EMAIL PREPROCESSING SUMMARY - October 23, 2025
+==============================================
+
+WORK INBOX (edmund@superposition.ai):
+Total Today: 99 emails
+Archived: 30 emails  
+Remaining: 69 emails for manual review
+
+ARCHIVED ITEMS:
+- Marketing & Promotional: 11 emails (Paraform, Forbes Councils, HR Brew, Gusto, Salesforge, TAAFT, PDL, The Org, Apollo)
+- Calendar Confirmations & Acceptances: 8 emails (Julia Dixon, Moshe Fehler, Przemyslaw Bober, Kate Harrison, Notion/Luma reminders)
+- Notion & Integration Updates: 4 emails (trial status, workspace invitations, changes)
+- Merchant Charges & Routine Billing: 5 emails (OpenAI charges, Mercury notifications)
+- Docusign Document Notifications: 2 emails (views/completions tracking)
+
+REQUIRES MANUAL REVIEW (69 emails):
+
+High Priority - Financial/Legal/Investment:
+- Paul Hastings (Jordan Goldman) - SAFE vs convertible note guide follow-up
+- Trigger.dev - 500% billing alert (IMPORTANT)
+- OpenAI funding notifications - 2 transactions marked IMPORTANT
+
+Business-Critical:
+- Kamil (Ruczynski) - Proposal decision pending (10% success fee model)
+- Sarah Allali (The Lobby) - Hiring call scheduled Monday 1-2:30 PM PT
+- Eddie Maldonado (Andela) - Onboarding reschedule in progress
+- Kai Kevin Qiu - Video testimonials shoot scheduling (next Wed)
+
+Investor/VC Meetings:
+- Mike Shehan (via Phil Bronner/Ardent VC) - locked 2 PM ET Thursday Oct 30
+- Yoav - Founder breakfast Tuesday Oct 28, 2-3 PM EDT
+- Kellie O'Hara (Digeratti Investments) - Follow-up from breakfast
+- Sidney Golden (Vanta) - Compliance tooling decision
+
+Contract/Legal:
+- 3 Docusign MSAs in flight (Gravity awaiting review, Odynn with suggestions, Camfer completed)
+
+Administrative:
+- Lemlist LinkedIn connection error (cookie expired)
+- Pilot Bookkeeping - 3 transactions to categorize
+- Notion updates from Xiang Li
+
+Networking/Social:
+- Vrijen Attawar - Friday dinner at Devocion, 4 PM
+- Christian Bryant (Dunbar) - product review pending
+
+Delivery:
+- UPS package cleared customs (delivery Friday 10/24)
+
+Content/Learning (Newsletters kept):
+- Lenny's Newsletter: AI Engineering insights
+- Pragmatic Engineer: AWS outage analysis  
+- Upstarts: Cursor enterprise push + AI64 report
+- GTM Engineer: MuleSoft strategy (60-min podcast)
+- Lynx Collective: Fundraising advice video (12 mins)
+- First Round: Compensation strategy
+- Sublime: Internet infrastructure innovation
+- Forum Ventures: Founder development (asking for help)
+- Tech:NYC: Local ecosystem updates
+
+FILES CREATED:
+- /Users/edmund/MyAssistant/email_summaries_2025_10_23.md
+- /Users/edmund/MyAssistant/newsletter_digest_2025_10_23.md
+
+NEXT ACTIONS:
+1. Review financial/legal items (Paul Hastings, Trigger.dev alert, OpenAI receipts)
+2. Address Kamil proposal decision
+3. Confirm video testimonial shoot date/time
+4. Prepare for investor meetings (Mike Shehan, Yoav breakfast)
+5. Review Dunbar product this weekend
+6. Handle Friday social commitment with Vrijen
