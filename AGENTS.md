@@ -264,16 +264,17 @@ For detailed information about Edmund's background, personal information, and co
    - **Amazon orders/shipped** (only keep delivery confirmations - archive ordered/shipped)
    - **Google Voice notifications** (missed calls, voicemails - redundant with phone)
    - **Unsubscribe confirmations** (automated responses)
-   - **Marketing campaigns** and unused product updates
+   - **Marketing campaigns** and vendor product updates (release notes, changelogs, feature/roadmap updates) — WORK inbox aggressive policy
    - **GitHub Actions notifications** (test runs, deployments)
    - **Routine Mercury transaction notifications**
-   - **Newsletters** (all newsletters including TLDR, Lenny's, Betaworks - content extracted to newsletter digest)
+   - **Newsletters** (all newsletters including TLDR, Lenny's, Betaworks) — archive by default; insights may be extracted separately
 7. **Keep & Label**:
    - **Finance emails** (Finance label):
      - Tax documents, CPA communications, investment updates
      - Betterment/investment account issues, Webull prospectus
      - Anthropic account/usage updates, SoFi banking
      - **NEVER ARCHIVE**: Failed payments, password resets, account security alerts
+     - WORK inbox exceptions: Preserve critical notices from Mercury, Pilot, and Gusto (payments, security, account access, compliance)
    - **Bills** (Bills label + mark as IMPORTANT):
      - Utilities (Con Edison), credit cards (Chase, AmEx), rent (RentPayment)
      - Wire transfer confirmations, statement notifications
@@ -302,6 +303,10 @@ For detailed information about Edmund's background, personal information, and co
      - Routine billing notifications - email summary only
    - **These are FYI items only** - not action items requiring time blocks or team discussion
    - **Exception**: Include ONLY if payment fails or requires manual intervention
+
+### Visibility Principles (WORK inbox)
+- Surface only emails clearly sent by an individual person to Edmund, and critical finance/legal notices
+- Default-archive bulk campaigns, newsletters, and automated vendor product updates
 
 ### MCP Email Limitations
 - No true "forward" function available - must manually craft forwarded emails

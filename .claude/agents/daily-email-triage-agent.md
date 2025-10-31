@@ -26,6 +26,8 @@ Process email triage results from email-preprocessor, apply manual labels, creat
   - Edmund's User ID for task assignment
 - **Limitation**: Does NOT create or modify daily schedules, standup notes, sprint files, or calendar events
 
+<!-- Archiving logic lives in email-preprocessor; this agent assumes noise is already archived. -->
+
 ## Process
 
 ### 1. File Management & Date Check
@@ -42,7 +44,7 @@ Process email triage results from email-preprocessor, apply manual labels, creat
   - Credit card bill processing patterns
 - **Input**: email-preprocessor summary with archived/remaining email counts
 - Agent will fetch today's emails from **work account only** (edmund@superposition.ai)
-- Auto-archive routine items based on CLAUDE.md rules
+- Assume email-preprocessor already applied auto-archiving (marketing/newsletters/vendor updates) and preserved critical finance/legal notices per AGENTS.md
 - Return preprocessing summary with archived and remaining emails
 
 ### 3. Manual Labeling
@@ -51,7 +53,8 @@ Process email triage results from email-preprocessor, apply manual labels, creat
 - **Thread efficiency**: Only label one email per thread
 
 ### 4. Newsletter Content Extraction  
-- **Process valuable newsletters** (list in CLAUDE.md)
+- Default: newsletters are archived; extraction happens before archival when applicable
+- **Process valuable newsletters** (per CLAUDE.md) only if clear, high-signal insights are present
 - **Extract insights** with source attribution and links
 - **Follow guidelines** in CLAUDE.md for content organization
 - **No action items** - informational content only
@@ -146,6 +149,7 @@ Consolidated newsletter insights including:
 6. **Recommended Resources**: Books, podcasts, events mentioned
 
 **CRITICAL**: Every section must include original article links - skip insights without source URLs
+If no valuable newsletters remain (due to auto-archiving), the digest may be omitted for the day.
 
 **Source Attribution Requirements**:
 - **MANDATORY**: Include original article links for all snippets and insights
@@ -248,10 +252,8 @@ mcp__notion-mcp__API-patch-block-children({
 - Only include emails actually received TODAY in summaries
 
 ## Special Handling Rules
-- **TLDR/Lenny's Newsletters**: Always keep and extract insights
-- **Finance/Legal**: Never auto-archive, always manual review
+- **Newsletter Extraction**: Read full content for valuable newsletters only; newsletters may already be archived by preprocessor
 - **Thread Efficiency**: Only need to label one email per thread
-- **Newsletter Extraction**: Read full content for valuable newsletters only
 
 ## Critical Notes
 
