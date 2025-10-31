@@ -20,6 +20,7 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - Get current date and time
 - Determine if it's a workday (Monday-Friday)
 - Store date in format YYYY-MM-DD for file operations
+- **NEW: Check assistant state** - run `python scripts/assistant_state.py summary` to see what needs processing
 
 ### 2. Current Sprint Detection (MOVED BEFORE EMAIL PROCESSING)
 - **CRITICAL**: Query Sprint Database (19dc548c-c4ff-80db-a687-fade4b6cc149) to get current active sprint
@@ -28,14 +29,16 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - **Purpose**: Ensure all daily tasks are created in the actual current sprint
 - **IMPORTANT**: Sprint ID must be retrieved BEFORE email processing to enable task creation from emails
 
-### 3. Email Processing (WITH TASK CREATION)
+### 3. Email Processing (WITH TASK CREATION & STATE TRACKING)
 - Use Agent: `daily-email-triage` and `email-preprocessor`
-- Processes both work and personal emails
+- **STATE AWARE**: Both agents use `scripts/assistant_state.py` to determine date range
+- Processes both work and personal emails (may process multiple days if skipped)
 - Use `email-preprocessor` first to do the initial sweep, then pass the context AND current sprint ID to `daily-email-triage` for detailed triaging
 - Archives routine/marketing emails
 - Applies manual labels to important emails
 - **NEW: Creates Notion tasks for actionable emails with Gmail deep links**
 - Extracts newsletter content
+- **State updates automatically after successful completion**
 - Outputs:
   - `email_summaries_YYYY_MM_DD.md` (includes Notion tasks created)
   - `newsletter_digest_YYYY_MM_DD.md`

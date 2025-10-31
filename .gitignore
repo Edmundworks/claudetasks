@@ -110,3 +110,6 @@ private/
 *.pem
 *.crt
 *.p12
+
+# Assistant state tracking
+.assistant_state.json
