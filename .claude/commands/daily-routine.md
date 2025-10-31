@@ -117,7 +117,7 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 
 ## Success Criteria - ENHANCED
 - All components execute successfully
-- No duplicate calendar events created  
+- No duplicate calendar events created
 - Email inbox properly triaged
 - Daily schedule reflects accurate state
 - Standup notes ready before 11:00am on workdays
@@ -125,6 +125,7 @@ Execute [YOUR_NAME]'s complete daily routine by running email triage, daily plan
 - **Enhanced Parsing**: Section-by-section analysis completed with verification checkpoint
 - **Task Adherence**: All direct daily tasks created 1:1 from numbered list
 - **Workflow Execution**: All workflow instructions executed with correct derived task counts
+- **EXECUTION SUMMARY**: Comprehensive summary provided at end showing all actions taken
 
 ## Validation & Reporting - ENHANCED VERIFICATION
 **MANDATORY**: After completing Daily Todo Processing Phase 3, provide comprehensive verification:
@@ -163,6 +164,70 @@ STOP-GATE DECISION:
 ❌ HALT (fix discrepancies before proceeding)
 ```
 
+## Execution Summary Output
+
+After completing the daily routine, provide a comprehensive summary in this format:
+
+```
+╔════════════════════════════════════════════════════════════════╗
+║           DAILY ROUTINE EXECUTION SUMMARY                      ║
+║           [DATE] - [DAY OF WEEK]                              ║
+╚════════════════════════════════════════════════════════════════╝
+
+📊 STATE TRACKING STATUS:
+  • email_preprocessor: Last run [X] days ago
+  • sales_pipeline_tracker: Last run [X] days ago
+  • granola_meeting_summarizer: Last run [X] days ago
+
+📧 EMAIL PROCESSING (Date range: YYYY-MM-DD to YYYY-MM-DD):
+  • Work inbox: [X] emails processed, [Y] archived, [Z] remaining
+  • Personal inbox: [X] emails processed, [Y] archived, [Z] remaining
+  • Notion tasks created: [X] tasks from actionable emails
+  • Newsletter insights: [X] items extracted
+  • Files: email_summaries_YYYY_MM_DD.md, newsletter_digest_YYYY_MM_DD.md
+
+📅 MEETINGS PROCESSED (Date range: YYYY-MM-DD to YYYY-MM-DD):
+  • Meetings found: [X] meetings across [Y] days
+  • Action items extracted: [X] items
+  • Files: meetings_summary_YYYY-MM-DD_to_YYYY-MM-DD.md
+
+💼 SALES PIPELINE (Date range: YYYY-MM-DD to YYYY-MM-DD):
+  • Sales calls tracked: [X] calls
+  • New opportunities: [X] added to CRM
+  • Progression detected: [X] moved to onboarding
+  • CRM updates: [X] rows modified
+
+✅ DAILY TASKS CREATED:
+  • Direct tasks from Daily Todos: [X] tasks
+  • Workflow-derived tasks: [Y] tasks
+  • Email-based tasks: [Z] tasks
+  • Total tasks in today's sprint: [TOTAL] tasks
+  • Verification: ✅ COMPLETE / ❌ INCOMPLETE
+
+📆 DAILY SCHEDULE:
+  • Calendar events: [X] events from both calendars
+  • Time blocks allocated: [Y] blocks
+  • Files: daily_schedule_YYYY-MM-DD.md
+
+📝 STANDUP NOTES ([If applicable]):
+  • Generated: [YES/NO]
+  • Files: standup_notes_YYYY-MM-DD.md
+
+🎯 CURRENT SPRINT:
+  • Sprint: Week [X]
+  • Sprint ID: [ID]
+  • Date range: [START] to [END]
+  • Theme: [THEME]
+
+⚠️  WARNINGS/ISSUES:
+  • [List any errors, conflicts, or items needing attention]
+  • [Or "None" if all clean]
+
+🎉 ROUTINE COMPLETED: [HH:MM:SS] elapsed
+
+Next routine recommended: [TOMORROW'S DATE]
+```
+
 ## Example Execution
 
 When you run this command, I will execute the **Simplified Agent-Based Workflow**:
@@ -188,3 +253,31 @@ When you run this command, I will execute the **Simplified Agent-Based Workflow*
 6. Run **`daily-standup-notes-agent`** if Monday/Wednesday/Thursday/Friday
 
 **Key Enhancement**: Modular agent architecture prevents complexity overflow and ensures reliable task creation.
+
+## Execution Instructions
+
+### Track Metrics Throughout Execution
+
+As you execute each phase, **track and accumulate** the following metrics:
+
+1. **Start Time**: Record when routine begins
+2. **State Status**: Run `python scripts/assistant_state.py summary` at start
+3. **Each Agent Output**: Capture key metrics from each agent's final report:
+   - Email preprocessor: date range, emails processed/archived/remaining, tasks created
+   - Email triage: newsletter insights count
+   - Meetings: date range, meetings found, action items extracted
+   - Sales pipeline: calls tracked, CRM updates
+   - Daily tasks: direct tasks, derived tasks, verification status
+   - Daily planning: calendar events, time blocks
+   - Standup: generated yes/no
+4. **Sprint Info**: Current sprint details
+5. **Warnings**: Any errors, conflicts, or attention items
+6. **End Time**: Record when routine completes
+
+### Final Summary Generation
+
+After ALL phases complete, generate the execution summary using the template above with actual values. This summary is the **final output** shown to the user and should be the last thing printed to the command line.
+
+### Summary Storage
+
+Optionally save the summary to: `execution_summary_YYYY-MM-DD.md` for reference.
