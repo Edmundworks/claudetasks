@@ -15,7 +15,6 @@ This is what you'll see at the end of running `/daily-routine`:
 
 📧 EMAIL PROCESSING (Date range: 2025-10-28 to 2025-10-31):
   • Work inbox: 247 emails processed, 198 archived, 49 remaining
-  • Personal inbox: 89 emails processed, 67 archived, 22 remaining
   • Notion tasks created: 12 tasks from actionable emails
   • Newsletter insights: 23 items extracted
   • Files: email_summaries_2025_10_31.md, newsletter_digest_2025_10_31.md
@@ -39,7 +38,7 @@ This is what you'll see at the end of running `/daily-routine`:
   • Verification: ✅ COMPLETE
 
 📆 DAILY SCHEDULE:
-  • Calendar events: 6 events from both calendars
+  • Calendar events: 6 events from work calendar
   • Time blocks allocated: 12 blocks
   • Files: daily_schedule_2025-10-31.md
 

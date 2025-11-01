@@ -46,11 +46,8 @@ def generate_summary(metrics: Dict[str, Any]) -> str:
         date_range = email.get('date_range', 'today')
         summary += f"📧 EMAIL PROCESSING (Date range: {date_range}):\n"
         work = email.get('work', {})
-        personal = email.get('personal', {})
         summary += f"  • Work inbox: {work.get('processed', 0)} emails processed, "
         summary += f"{work.get('archived', 0)} archived, {work.get('remaining', 0)} remaining\n"
-        summary += f"  • Personal inbox: {personal.get('processed', 0)} emails processed, "
-        summary += f"{personal.get('archived', 0)} archived, {personal.get('remaining', 0)} remaining\n"
         summary += f"  • Notion tasks created: {email.get('tasks_created', 0)} tasks from actionable emails\n"
         summary += f"  • Newsletter insights: {email.get('newsletter_insights', 0)} items extracted\n"
         summary += f"  • Files: {email.get('files', 'email_summaries_*.md, newsletter_digest_*.md')}\n\n"
@@ -99,7 +96,7 @@ def generate_summary(metrics: Dict[str, Any]) -> str:
     schedule = metrics.get('schedule', {})
     if schedule:
         summary += "📆 DAILY SCHEDULE:\n"
-        summary += f"  • Calendar events: {schedule.get('events', 0)} events from both calendars\n"
+        summary += f"  • Calendar events: {schedule.get('events', 0)} events from work calendar\n"
         summary += f"  • Time blocks allocated: {schedule.get('blocks', 0)} blocks\n"
         summary += f"  • Files: {schedule.get('files', 'daily_schedule_*.md')}\n\n"
 
@@ -173,7 +170,6 @@ if __name__ == '__main__':
         'email': {
             'date_range': '2025-10-28 to 2025-10-31',
             'work': {'processed': 247, 'archived': 198, 'remaining': 49},
-            'personal': {'processed': 89, 'archived': 67, 'remaining': 22},
             'tasks_created': 12,
             'newsletter_insights': 23,
         },
