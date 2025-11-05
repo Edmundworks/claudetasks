@@ -94,6 +94,29 @@ Execute each step in order. Report completion after each step using the checkpoi
 
 ---
 
+### ✅ CHECKPOINT 3.5: Sales Pipeline Tracking
+
+**Actions:**
+1. Launch `sales-pipeline-tracker` agent (Task tool)
+2. Agent processes Granola calls from state-tracked date range
+3. Agent searches for onboarding meetings in calendar
+4. Agent updates Job Pipeline CRM in Notion (Database: `20ac548cc4ff80ee9628e09d72900f10`)
+5. Capture: calls tracked, new opportunities, progressions, CRM updates
+
+**Verification:**
+```
+✅ CHECKPOINT 3.5 COMPLETE
+- Date range processed: [start] to [end]
+- Sales calls tracked: [X] calls
+- New opportunities: [X] added to CRM
+- Progression detected: [X] moved to onboarding
+- CRM updates: [X] rows modified
+```
+
+**⛔ STOP GATE**: Do not proceed until sales pipeline tracking completes.
+
+---
+
 ### ✅ CHECKPOINT 4: Daily Tasks Creation ⚠️ CRITICAL - DO NOT SKIP
 
 **Actions:**
@@ -121,7 +144,32 @@ Execute each step in order. Report completion after each step using the checkpoi
 
 ---
 
-### ✅ CHECKPOINT 5: Daily Planning
+### ✅ CHECKPOINT 5: Meetings Processing (Optional)
+
+**Actions:**
+1. If meetings exist: Launch `granola-meeting-summarizer` agent (Task tool)
+2. Agent processes Granola meetings from state-tracked date range
+3. Agent extracts action items and creates summary
+4. If no meetings: Skip this checkpoint
+5. Capture: meetings found, action items extracted
+
+**Verification:**
+```
+✅ CHECKPOINT 5 COMPLETE
+- Date range processed: [start] to [end]
+- Meetings found: [X] meetings across [Y] days
+- Action items extracted: [X] items
+- File created: meetings_summary_YYYY-MM-DD_to_YYYY-MM-DD.md
+OR
+✅ CHECKPOINT 5 SKIPPED
+- No meetings to process
+```
+
+**⛔ STOP GATE**: Proceed regardless (optional checkpoint).
+
+---
+
+### ✅ CHECKPOINT 6: Daily Planning
 
 **Actions:**
 1. Launch `daily-planning` agent (Task tool)
@@ -132,7 +180,7 @@ Execute each step in order. Report completion after each step using the checkpoi
 
 **Verification:**
 ```
-✅ CHECKPOINT 5 COMPLETE
+✅ CHECKPOINT 6 COMPLETE
 - Calendar events: [X] events from work calendar
 - Time blocks: [Y] blocks allocated
 - File created: daily_schedule_YYYY-MM-DD.md
@@ -142,16 +190,16 @@ Execute each step in order. Report completion after each step using the checkpoi
 
 ---
 
-### ✅ CHECKPOINT 6: Sprint Information Update (Conditional)
+### ✅ CHECKPOINT 7: Sprint Information Update (Conditional)
 
 **Actions:**
 - If Tuesday: Launch `sprint-planning-agent` (Task tool)
-- If not Tuesday: Skip to Checkpoint 7
+- If not Tuesday: Skip to Checkpoint 8
 - Update CLAUDE.md if sprint info is outdated
 
 **Verification:**
 ```
-✅ CHECKPOINT 6 COMPLETE
+✅ CHECKPOINT 7 COMPLETE
 - Day: [Day of week]
 - Sprint planning: [RAN / SKIPPED - not Tuesday]
 - CLAUDE.md: [UPDATED / NO UPDATE NEEDED]
@@ -159,7 +207,7 @@ Execute each step in order. Report completion after each step using the checkpoi
 
 ---
 
-### ✅ CHECKPOINT 7: Standup Notes (Workdays Only)
+### ✅ CHECKPOINT 8: Standup Notes (Workdays Only)
 
 **Actions:**
 - If Monday/Wednesday/Thursday/Friday: Launch `daily-standup-notes-agent` (Task tool)
@@ -168,7 +216,7 @@ Execute each step in order. Report completion after each step using the checkpoi
 
 **Verification:**
 ```
-✅ CHECKPOINT 7 COMPLETE
+✅ CHECKPOINT 8 COMPLETE
 - Day: [Day of week]
 - Standup generated: [YES / NO - not a standup day]
 - File created: [filename or N/A]
@@ -216,11 +264,13 @@ The workflow is now enforced through mandatory checkpoints (see above). Each che
 1. ✅ Environment Setup & State Check
 2. ✅ Current Sprint Detection (⛔ STOP GATE)
 3. ✅ Email Processing (⛔ STOP GATE)
+3.5. ✅ Sales Pipeline Tracking (⛔ STOP GATE)
 4. ✅ Daily Tasks Creation (⛔ CRITICAL STOP GATE - CANNOT BE SKIPPED)
-5. ✅ Daily Planning (⛔ STOP GATE)
-6. ✅ Sprint Information Update (Conditional)
-7. ✅ Standup Notes (Conditional)
-8. ✅ Final Execution Summary
+5. ✅ Meetings Processing (Optional)
+6. ✅ Daily Planning (⛔ STOP GATE)
+7. ✅ Sprint Information Update (Conditional)
+8. ✅ Standup Notes (Conditional)
+9. ✅ Final Execution Summary
 
 ## Time Considerations
 - **Best Run Time**: 9:00am-10:00am ET
@@ -233,20 +283,23 @@ The workflow is now enforced through mandatory checkpoints (see above). Each che
 - **If any checkpoint fails**: STOP execution immediately
 - **Report failure**: State which checkpoint failed and why
 - **Do not proceed**: Wait for manual intervention
-- **Exception**: Conditional checkpoints (6, 7) can be skipped if not applicable
+- **Exception**: Conditional/optional checkpoints (5, 7, 8) can be skipped if not applicable
 - **Checkpoint 4 is MANDATORY**: Daily tasks creation cannot be skipped under any circumstances
+- **Checkpoint 3.5 is MANDATORY**: Sales pipeline tracking cannot be skipped
 
 ## Success Criteria - CHECKPOINT BASED
 
 Success is measured by checkpoint completion:
 
-- ✅ All 7 checkpoints completed successfully
+- ✅ All mandatory checkpoints completed successfully (1, 2, 3, 3.5, 4, 6)
+- ✅ Conditional checkpoints executed if applicable (5, 7, 8)
 - ✅ Each checkpoint verification reported
 - ✅ All stop gates passed
-- ✅ **Checkpoint 4 verification status: COMPLETE** (most critical)
-- ✅ No checkpoints skipped
+- ✅ **Checkpoint 4 verification status: COMPLETE** (most critical - daily tasks)
+- ✅ **Checkpoint 3.5 completed: Sales pipeline tracked**
+- ✅ No mandatory checkpoints skipped
 - ✅ Execution summary provided at end with all metrics
-- ✅ All expected files created (emails, schedule, standup if applicable)
+- ✅ All expected files created (emails, schedule, meetings if applicable, standup if applicable)
 
 ## Checkpoint 4 Verification Details
 
