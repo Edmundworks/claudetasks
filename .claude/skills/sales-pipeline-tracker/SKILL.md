@@ -77,7 +77,7 @@ mcp__granola__get_folder_meetings({
 })
 ```
 
-### Step 5: Extract Meeting Details
+### Step 5: Extract Meeting Details & Company Names
 
 For each meeting found, get details and transcript:
 
@@ -86,10 +86,15 @@ mcp__granola__get_meeting_details({ meeting_id: "..." })
 mcp__granola__get_meeting_transcript({ meeting_id: "..." })
 ```
 
-Extract:
-- Company name from attendee email domains
-- Contact person and email
-- Call context from transcript
+The MCP now returns `participant_details` with emails and companies. Extract:
+
+1. **Company name** (see "Company Name Rules" section below):
+   - Use `participant.company` if available
+   - Otherwise clean the email domain (remove `.com`, `join` prefix, etc.)
+   - **NEVER use person's name as company name**
+2. **Contact person** - the external attendee (not Edmund)
+3. **Contact email** - from participant_details
+4. **Call context** - from transcript
 
 ### Step 6: Check for Onboarding Progression
 
@@ -144,12 +149,70 @@ Update state after success:
 source venv/bin/activate && python -c "from scripts.assistant_state import update_last_run; update_last_run('sales_pipeline_tracker')"
 ```
 
-## Client Identification Rules
+## Company Name Rules (CRITICAL)
 
-1. Extract company name from attendee email domains
-2. Check Granola transcript for company mentions
-3. Cross-reference against CRM for exact matches
-4. Use fuzzy matching for Inc./Corp./LLC variations
+### FORBIDDEN: Using Person's Name as Company Name
+
+**NEVER create CRM entries using a person's name as the company name.**
+
+Bad examples (DO NOT DO):
+- ❌ "Victoria Pu" as company name
+- ❌ "Satish Nagpal" as company name
+- ❌ "Tunde Adeyinka" as company name
+
+The only exception is when the company is literally named after a person (e.g., "John Deere", "Goldman Sachs").
+
+### Company Name Extraction (Use fetch-granola-notes Rules)
+
+Follow the company name cleaning rules from `fetch-granola-notes` skill:
+
+1. **Use participant.company** if available from MCP response
+2. **Extract from email domain** and apply cleaning:
+   - Remove suffixes: `.com`, `.ai`, `.io`, `.co`, `.org`, `.net`, `.gg`, `.app`, `.dev`
+   - Remove prefixes: `join`, `get`, `try`, `use`, `meet`, `hello`, `hi`, `with`, `go`, `my`, `the`
+   - Title case the result
+
+### Extraction Examples
+
+| Participant Email | Company Name |
+|-------------------|--------------|
+| `tunde@joinhexagon.com` | Hexagon |
+| `victoria@paceapp.ai` | Pace App |
+| `satish@astrada.co` | Astrada |
+| `ben@heater.gg` | Heater |
+| `ayoola@astronaut.chat` | Astronaut |
+
+### Validation Before CRM Creation
+
+Before creating or updating a CRM entry:
+
+1. **Verify company name is NOT a person's name**
+   - Check if it matches `FirstName LastName` pattern
+   - Check if it matches the participant's name
+   - If it does, STOP and extract from email domain instead
+
+2. **Verify company name is cleaned**
+   - No `.com`, `.ai`, etc. suffixes
+   - No `join`, `get`, etc. prefixes
+   - Properly capitalized
+
+3. **If company name cannot be determined**
+   - Flag for manual review
+   - Do NOT create entry with person's name as fallback
+
+### Client Identification Priority
+
+1. **Company field** from Granola MCP participant_details (highest priority)
+2. **Email domain** - cleaned using the rules above
+3. **Transcript mentions** - look for company name in transcript
+4. **Meeting title** - parse company name if format is "Call with [Company]"
+5. **Manual review** - if none of above work, flag for human input
+
+### Cross-Reference Rules
+
+- Cross-reference against CRM for exact matches
+- Use fuzzy matching for Inc./Corp./LLC variations
+- Match by email domain (john@company.com matches sarah@company.com)
 
 ## Source Label Inference
 
@@ -168,21 +231,25 @@ If unknown, mark as `Source: (unknown, leave blank)`
 **Date Range**: [start] to [end] ([N] days)
 **Sales Calls Found**: [count]
 
-### [Date]: [Company Name]
-- **Contact**: [Name] ([email])
-- **Evidence**: [domain/transcript snippet]
+### [Date]: [Company Name] (cleaned from email/participant data)
+- **Company**: [Cleaned company name - NOT person's name]
+- **Contact**: [Name] <[email]>
+- **Company Source**: [participant.company / email domain / transcript]
 - **CRM Status**: [New/Existing]
 - **Onboarding**: [Detected on DATE / Not detected]
 - **Proposed Action**: [Create new / Update to Onboarding]
 - **Status**: Sales Call | **Source**: [inferred or unknown]
 
 ### Proposed Changes (Awaiting Approval)
-1. [Action for Company A]
-2. [Action for Company B]
+1. Create "Hexagon" (from tunde@joinhexagon.com)
+2. Update "Astrada" status to Onboarding
 
 ### Warnings
 - [Any ambiguous matches]
+- [Companies that could not be identified - require manual review]
 ```
+
+**CRITICAL**: The CRM entry title MUST be the cleaned company name, NOT the person's name.
 
 ## Available Granola MCP Tools
 

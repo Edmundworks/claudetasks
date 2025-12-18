@@ -4,8 +4,8 @@ Last time meetings were fetched and summarized by category.
 
 | Category | Last Summarized | Meetings Processed |
 |----------|-----------------|-------------------|
-| Sales - Call 1 | 2025-12-11 | 3 (1 with transcript, 2 no transcript) |
-| Onboarding - Call 2 | 2025-12-11 | 3 (1 with transcript, 2 no transcript) |
+| Sales - Call 1 | 2025-12-18 09:00 | 1 (Hexagon - Tunde Adeyinka) |
+| Onboarding - Call 2 | 2025-12-18 09:00 | 3 (Hexagon, Archouse Health, Simbie Health - no transcript) |
 | Customer calls | Never | 0 |
 | VC Calls | Never | 0 |
 | 1st Interview - Edmund | Never | 0 |
