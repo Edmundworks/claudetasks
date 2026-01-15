@@ -30,7 +30,7 @@ A **meeting ID** (string).
 
 1. Fetch meeting details and transcript using the Granola MCP
 2. Extract company name following skill rules
-3. Generate structured summary based on meeting category
+3. Generate structured summary based on meeting category, If there are specific next steps mentioned that would require an action on my side, such as following up on a given date or following up in a certain date range, I'll explicitly include in the summary that action item, including the date on which it should happen relative to today's date. A summary of what that action should be and who it should be sent to, like which party in the call it should be sent to and their email address.
 4. Save to file following skill's directory structure
 5. Return: file path, company name, contact, meeting ID
 

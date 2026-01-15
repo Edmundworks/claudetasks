@@ -28,6 +28,29 @@ See `@crm_schema.md` (co-located with this skill) for full database schema inclu
 
 ---
 
+## API Approach: Direct Notion API vs MCP
+
+**IMPORTANT**: Use direct Notion API calls via curl for **creating pages**. The Notion MCP has a bug where the `parent` parameter gets double-stringified, causing page creation to fail.
+
+### What Works with MCP
+- `mcp__notion-mcp__API-post-search` - Search for pages/databases
+- `mcp__notion-mcp__API-patch-page` - Update existing page properties
+- `mcp__notion-mcp__API-patch-block-children` - Append content to pages
+- `mcp__notion-mcp__API-retrieve-a-page` - Get page details
+
+### What Requires Direct API (curl)
+- **Creating new pages** (`POST /v1/pages`) - MCP bug with `parent` parameter
+- **Moving pages** (`POST /v1/pages/{id}`) - Same `parent` parameter bug
+
+### Environment Setup
+The Notion token is stored in `/Users/edmund/MyAssistant/.env`:
+```bash
+# Load token before API calls
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs)
+```
+
+---
+
 ## Primary Workflow: Update CRM from Meeting Summaries
 
 This is the main workflow for keeping the CRM in sync with sales activity.
@@ -76,36 +99,47 @@ From each meeting summary, extract:
 
 ### Step 4: Cross-Reference with CRM
 
-Query the CRM to check for existing entries:
+Use MCP to search for existing entries:
 
 ```javascript
-mcp__notion-mcp__API-post-database-query({
-  database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10",
-  filter: {
-    property: "Name",
-    title: { contains: "<company-name>" }
-  }
+mcp__notion-mcp__API-post-search({
+  query: "<company-name>",
+  filter: { property: "object", value: "page" }
 })
 ```
 
 Determine action for each company:
-- **Not found**: Create new entry
-- **Found at "Lead"**: Update to "Sales Call"
+- **Not found**: Create new entry (use curl)
+- **Found at "Lead"**: Update to "Sales Call" (use MCP)
 - **Found at "Sales Call"**: Check if onboarding discussed → update to "Onboarding"
 - **Found at "Onboarding"**: No status change needed (unless progressing further)
 
 ### Step 5: Apply CRM Updates
 
-Execute the updates:
+#### Creating New Entries (USE CURL - MCP has bug)
+
+```bash
+# Load environment and create new CRM entry
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs) && \
+curl -s -X POST "https://api.notion.com/v1/pages" \
+  -H "Authorization: Bearer ${NOTION_TOKEN}" \
+  -H "Notion-Version: 2022-06-28" \
+  -H "Content-Type: application/json" \
+  --data-raw '{
+    "parent": {"database_id": "20ac548c-c4ff-80ee-9628-e09d72900f10"},
+    "properties": {
+      "Name": {"title": [{"text": {"content": "Company Name"}}]},
+      "Status": {"status": {"name": "Sales Call"}},
+      "Owner": {"people": [{"id": "6ae517a8-2360-434b-9a29-1cbc6a427147"}]},
+      "Source Type": {"select": {"name": "VC"}},
+      "Source": {"select": {"name": "VC - Phil - Ardent"}}
+    }
+  }' | jq '.id'
+```
+
+#### Updating Existing Entries (MCP works fine)
 
 ```javascript
-// Create new entry
-mcp__notion-mcp__API-post-page({
-  parent: { database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10" },
-  properties: { title: [{ text: { content: "Company Name" } }] }
-})
-
-// Update with properties
 mcp__notion-mcp__API-patch-page({
   page_id: "<page-id>",
   properties: {
@@ -117,9 +151,9 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Step 6: Add Contextual Notes to Page Content (CRITICAL)
+### Step 6: Add Contextual Notes to Page Content
 
-After creating/updating the CRM entry, **append contextual notes** to the page body. These notes help the next salesperson understand the context quickly.
+After creating/updating the CRM entry, **append contextual notes** to the page body (MCP works for this):
 
 ```javascript
 mcp__notion-mcp__API-patch-block-children({
@@ -129,9 +163,7 @@ mcp__notion-mcp__API-patch-block-children({
       type: "paragraph",
       paragraph: {
         rich_text: [
-          { type: "text", text: { content: "📅 @today " } },
-          { type: "text", text: { content: "2025-12-11", link: null } },
-          { type: "text", text: { content: " - Sales Call Notes" } }
+          { type: "text", text: { content: "📅 2025-12-11 - Sales Call Notes" } }
         ]
       }
     },
@@ -165,7 +197,7 @@ Extract from the meeting summary and write notes that help the next person:
 #### Note Format Template
 
 ```markdown
-📅 @today 2025-12-11 - Sales Call Notes
+📅 2025-12-11 - Sales Call Notes
 
 **Contact**: Jane Smith, Head of Engineering
 **Referral**: Phil at Ardent Ventures (worked together at previous startup)
@@ -182,65 +214,49 @@ hires by end of Q1.
 **Next Steps**: Onboarding call Dec 15 at 2pm to set up account and review initial candidates.
 ```
 
-#### Appending Notes on Status Updates
-
-When updating an existing entry (e.g., Sales Call → Onboarding), **append new notes** rather than replacing:
-
-```javascript
-// First, append the new timestamped notes
-mcp__notion-mcp__API-patch-block-children({
-  block_id: "<page-id>",
-  children: [
-    {
-      type: "paragraph",
-      paragraph: {
-        rich_text: [
-          { type: "text", text: { content: "📅 @today 2025-12-15 - Onboarding Call Notes" } }
-        ]
-      }
-    },
-    {
-      type: "paragraph",
-      paragraph: {
-        rich_text: [
-          { type: "text", text: { content: "<new contextual notes from onboarding summary>" } }
-        ]
-      }
-    }
-  ]
-})
-```
-
-This creates a chronological log of interactions on the page.
-
 ---
 
 ## Manual CRM Operations
 
-### Create New Lead
+### Create New Lead (CURL)
 
-```javascript
-// Step 1: Create the page with title
-mcp__notion-mcp__API-post-page({
-  parent: { database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10" },
-  properties: {
-    title: [{ text: { content: "Company Name" } }]
-  }
-})
-
-// Step 2: Update with full properties
-mcp__notion-mcp__API-patch-page({
-  page_id: "<new-page-id>",
-  properties: {
-    "Status": { status: { name: "Lead" } },
-    "Owner": { people: [{ id: "6ae517a8-2360-434b-9a29-1cbc6a427147" }] },
-    "Source Type": { select: { name: "VC" } },
-    "Source": { select: { name: "VC - Phill - Ardent" } }
-  }
-})
+```bash
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs) && \
+curl -s -X POST "https://api.notion.com/v1/pages" \
+  -H "Authorization: Bearer ${NOTION_TOKEN}" \
+  -H "Notion-Version: 2022-06-28" \
+  -H "Content-Type: application/json" \
+  --data-raw '{
+    "parent": {"database_id": "20ac548c-c4ff-80ee-9628-e09d72900f10"},
+    "properties": {
+      "Name": {"title": [{"text": {"content": "Company Name"}}]},
+      "Status": {"status": {"name": "Lead"}},
+      "Owner": {"people": [{"id": "6ae517a8-2360-434b-9a29-1cbc6a427147"}]},
+      "Source Type": {"select": {"name": "VC"}},
+      "Source": {"select": {"name": "VC - Phil - Ardent"}}
+    }
+  }' | jq '.id'
 ```
 
-### Update Deal Status
+### Create Entry at Sales Call Stage (CURL)
+
+```bash
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs) && \
+curl -s -X POST "https://api.notion.com/v1/pages" \
+  -H "Authorization: Bearer ${NOTION_TOKEN}" \
+  -H "Notion-Version: 2022-06-28" \
+  -H "Content-Type: application/json" \
+  --data-raw '{
+    "parent": {"database_id": "20ac548c-c4ff-80ee-9628-e09d72900f10"},
+    "properties": {
+      "Name": {"title": [{"text": {"content": "Company Name"}}]},
+      "Status": {"status": {"name": "Sales Call"}},
+      "Owner": {"people": [{"id": "6ae517a8-2360-434b-9a29-1cbc6a427147"}]}
+    }
+  }' | jq '.id'
+```
+
+### Update Deal Status (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -251,7 +267,7 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Progress to Onboarding
+### Progress to Onboarding (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -262,7 +278,7 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Mark as Won
+### Mark as Won (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -274,7 +290,7 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Mark as Lost
+### Mark as Lost (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -285,7 +301,7 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Update Metrics
+### Update Metrics (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -298,7 +314,7 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Set Follow-Up Date
+### Set Follow-Up Date (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -309,7 +325,7 @@ mcp__notion-mcp__API-patch-page({
 })
 ```
 
-### Add Customer Feedback
+### Add Customer Feedback (MCP)
 
 ```javascript
 mcp__notion-mcp__API-patch-page({
@@ -326,56 +342,48 @@ mcp__notion-mcp__API-patch-page({
 
 ## Query Operations
 
-### Find Lead by Name
+### Find Lead by Name (MCP)
 
 ```javascript
-mcp__notion-mcp__API-post-database-query({
-  database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10",
-  filter: {
-    property: "Name",
-    title: { contains: "Company Name" }
-  }
+mcp__notion-mcp__API-post-search({
+  query: "Company Name",
+  filter: { property: "object", value: "page" }
 })
 ```
 
-### Get All Leads at Status
+### Get Page Details (MCP)
 
 ```javascript
-mcp__notion-mcp__API-post-database-query({
-  database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10",
-  filter: {
-    property: "Status",
-    status: { equals: "Sales Call" }
-  }
+mcp__notion-mcp__API-retrieve-a-page({
+  page_id: "<page-id>"
 })
 ```
 
-### Get Deals Needing Follow-Up
+---
 
-```javascript
-mcp__notion-mcp__API-post-database-query({
-  database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10",
-  filter: {
-    property: "Follow-Up Date",
-    date: { on_or_before: "2025-12-11" }
-  }
-})
-```
+## Batch Operations (CURL)
 
-### Get Active Pipeline (Excluding Closed)
+### Create Multiple CRM Entries
 
-```javascript
-mcp__notion-mcp__API-post-database-query({
-  database_id: "20ac548c-c4ff-80ee-9628-e09d72900f10",
-  filter: {
-    and: [
-      { property: "Status", status: { does_not_equal: "closed lost" } },
-      { property: "Status", status: { does_not_equal: "Filled by us" } },
-      { property: "Status", status: { does_not_equal: "Not a fit" } },
-      { property: "Status", status: { does_not_equal: "Filled role" } }
-    ]
-  }
-})
+For creating multiple entries efficiently, run curl commands in parallel:
+
+```bash
+# Create multiple entries - run in parallel
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs)
+
+# Company 1
+curl -s -X POST "https://api.notion.com/v1/pages" \
+  -H "Authorization: Bearer ${NOTION_TOKEN}" \
+  -H "Notion-Version: 2022-06-28" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"parent":{"database_id":"20ac548c-c4ff-80ee-9628-e09d72900f10"},"properties":{"Name":{"title":[{"text":{"content":"Company1"}}]},"Status":{"status":{"name":"Sales Call"}},"Owner":{"people":[{"id":"6ae517a8-2360-434b-9a29-1cbc6a427147"}]}}}' | jq '.id'
+
+# Company 2 (can run in parallel)
+curl -s -X POST "https://api.notion.com/v1/pages" \
+  -H "Authorization: Bearer ${NOTION_TOKEN}" \
+  -H "Notion-Version: 2022-06-28" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"parent":{"database_id":"20ac548c-c4ff-80ee-9628-e09d72900f10"},"properties":{"Name":{"title":[{"text":{"content":"Company2"}}]},"Status":{"status":{"name":"Sales Call"}},"Owner":{"people":[{"id":"6ae517a8-2360-434b-9a29-1cbc6a427147"}]}}}' | jq '.id'
 ```
 
 ---
@@ -402,6 +410,33 @@ When creating CRM entries from meeting summaries, infer source from the `### Ref
 3. **Check for existing entry** before creating to avoid duplicates
 4. **Update Status promptly** based on meeting summaries
 5. **Track onboarding progression** - if onboarding is scheduled, update status
+6. **Use curl for page creation** - MCP has a bug with the `parent` parameter
+7. **Use MCP for updates** - `API-patch-page` and `API-patch-block-children` work correctly
+
+---
+
+## Troubleshooting
+
+### MCP Page Creation Fails
+**Error**: `body.parent should be an object or undefined, instead was "{"database_id": "..."}"`
+
+**Cause**: The Notion MCP has a bug where the `parent` parameter gets double-stringified.
+
+**Solution**: Use curl for page creation instead:
+```bash
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs) && \
+curl -s -X POST "https://api.notion.com/v1/pages" ...
+```
+
+### Token Not Found
+**Error**: `curl: option : blank argument where content is expected`
+
+**Cause**: NOTION_TOKEN environment variable not loaded.
+
+**Solution**: Ensure you're loading from .env:
+```bash
+export $(grep NOTION_TOKEN /Users/edmund/MyAssistant/.env | xargs)
+```
 
 ---
 
@@ -410,6 +445,7 @@ When creating CRM entries from meeting summaries, infer source from the `### Ref
 - **Schema**: `crm_schema.md` (co-located)
 - **Meeting Summaries**: `/Users/edmund/MyAssistant/meeting_summaries/`
 - **Timestamps**: `/Users/edmund/MyAssistant/.claude/skills/fetch-granola-notes/last_summarized.md`
+- **Environment**: `/Users/edmund/MyAssistant/.env` (contains NOTION_TOKEN)
 
 ## Related Skills & Agents
 

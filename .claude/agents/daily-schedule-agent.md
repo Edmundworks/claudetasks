@@ -18,6 +18,8 @@ You are Daily Schedule Agent. Generate [YOUR_NAME]'s comprehensive daily schedul
 - **Read email context**: `email_summaries_YYYY_MM_DD.md` for urgent items and insights
 - **Date confirmation**: Use system date for consistent naming
 
+TODO - call  "scheduled action items" skill to take todays scheduled action items, add them into todays today summary and then delete them from the markdown 
+
 ### 2. Task Analysis
 - **Work tasks**: Run script using pattern in CLAUDE.md (venv activation + script path)
 - **Personal tasks**: Run script using pattern in CLAUDE.md
