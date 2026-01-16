@@ -132,7 +132,7 @@ mcp__notion-mcp__API-patch-page({
    - Handle meeting scheduling and conflicts
    - **GTD Principle**: Only put hard appointments on calendar (meetings, events with specific times)
    - **DO NOT** create calendar blocks for quick tasks like "check email", "review documents", "HSA verification"
-   - Quick tasks belong in task lists or daily schedules, not as calendar events
+   - Quick tasks belong in task lists or daily plans, not as calendar events
 
 2. **Task Management**
    - Create all tasks in Work Task Database (`181c548c-c4ff-80ba-8a01-f3ed0b4a7fef`)
@@ -143,10 +143,10 @@ mcp__notion-mcp__API-patch-page({
 
 3. **Daily Planning**
    - Use `.claude/agents/daily-routine.md` command for comprehensive daily routine (includes email triage, planning, and standup notes)
-   - Individual planning: `.claude/commands/daily-planning.md` workflow for just daily schedules
+   - Individual planning: `.claude/commands/daily-planning.md` workflow for just daily plans
    - Coordinate between calendar events and task priorities
    - Balance all commitments and priorities
-   - Follow GTD: Calendar for appointments, daily schedule for tasks
+   - Follow GTD: Calendar for appointments, daily plan for tasks
 
 4. **Email Processing**
    - Systematic email triage and management across both accounts
@@ -197,11 +197,11 @@ mcp__notion-mcp__API-patch-page({
 - **Sprint Carryover**: When moving tasks to current sprint, ADD the new sprint relation without removing old ones to track task leakage across sprints
 - **Sprint Planning Transcripts**: Notion AI transcription blocks are not accessible via API - remind Edmund to share the transcript text during sprint planning
 - **Task Assignment**: Assign PM/customer-facing tasks to Edmund, engineering/technical tasks to Xiang Li
-- **CRITICAL**: When marking tasks as done in Notion, ALWAYS update the local daily schedule file to reflect completion
-- **CRITICAL**: When updating local copies (daily schedules, task lists), ALWAYS update the source of truth (Notion/Google Calendar) immediately to maintain consistency
+- **CRITICAL**: When marking tasks as done in Notion, ALWAYS update the local daily plan file to reflect completion
+- **CRITICAL**: When updating local copies (daily plans, task lists), ALWAYS update the source of truth (Notion/Google Calendar) immediately to maintain consistency
 - **CRITICAL SYNC PROTOCOL**: When ANY task status changes occur (completed, in progress, etc.):
   1. IMMEDIATELY update Notion database first
-  2. IMMEDIATELY update the daily schedule markdown file second
+  2. IMMEDIATELY update the daily plan markdown file second
   3. Check for any new calendar events needed
   4. Verify all three systems (Notion/Calendar/Local files) are synchronized
   - **NEVER** update only one system - always maintain full sync across all three
@@ -235,7 +235,7 @@ For detailed information about Edmund's background, personal information, and co
 1. **CRITICAL: Always exclude archived emails** from queries to prevent token explosions:
    - Use `-is:archived` in all email queries to exclude archived emails
 2. **Quick Scan**: Review sender, subject, snippet only (avoid full body to save tokens)
-3. **Email Deep Links**: Always include Gmail deep links in summaries and daily schedules:
+3. **Email Deep Links**: Always include Gmail deep links in summaries and daily plans:
    - **Work emails**: `https://mail.google.com/mail/u/0/#inbox/<email_id>`
    - Format: `[Email Subject](https://mail.google.com/mail/u/0/#inbox/<email_id>)` in markdown
    - Also include deep links when creating Notion page entries for email-related tasks
@@ -288,7 +288,7 @@ For detailed information about Edmund's background, personal information, and co
    - Task title format: "Pay [Bank] Card •••[last 4] - Due [date]"
 10. **Forward Important Items**: Send relevant opportunities to Xiang Li with context
 11. **IMPORTANT - Daily Schedule & Standup Exclusions**:
-   - **NEVER include in daily schedules or standup notes**:
+   - **NEVER include in daily plans or standup notes**:
      - Merchant charges (OpenAI, LinkedIn, Opus Clip, etc.) - brief in email summary only
      - Mercury ACH pulls and Mercury bills - email summary only, NOT in work todos
      - Terms & conditions updates (Anthropic, etc.) - email summary only
@@ -314,22 +314,23 @@ For detailed information about Edmund's background, personal information, and co
 
 ### File Management Patterns
 **Active Files (Root Directory - Today Only)**:
-- `email_summaries_YYYY_MM_DD.md` - Email processing results  
+- `email_summaries_YYYY_MM_DD.md` - Email processing results
 - `newsletter_digest_YYYY_MM_DD.md` - Newsletter insights
-- `daily_schedule_YYYY-MM-DD.md` - Daily schedule and tasks
+- `daily_plan_YYYY-MM-DD.md` - Daily plan with high priority items
 - `standup_notes_YYYY-MM-DD.md` - Standup preparation
+- `scheduled_action_items.md` - Persistent file with scheduled follow-ups (accumulates over time)
 
 **Archive Structure**:
 - `/archive/email_summaries/` - Historical email processing
 - `/archive/newsletter_digests/` - Historical newsletter content
-- `/archive/daily_schedules/` - Historical daily planning
+- `/archive/daily_plans/` - Historical daily planning
 - `/archive/standup_notes/` - Historical standup notes
 
 ### Context Sources for Direct Assistance
 When helping with ad-hoc requests, always reference:
 1. **Current sprint context** from this file's sprint information
 2. **Recent email summaries** for urgent items and context
-3. **Today's daily schedule** for task conflicts and availability  
+3. **Today's daily plan** for task conflicts and availability  
 4. **Database IDs and credentials** from this file for system operations
 
 ### Calendar Management Workflow

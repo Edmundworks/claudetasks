@@ -8,7 +8,7 @@ model: sonnet
 # Daily Email Triage Agent
 
 ## Purpose
-Process email triage results from email-preprocessor, apply manual labels, create Notion tasks for actionable emails, and generate comprehensive email summaries and newsletter digests. **SCOPE LIMITATION**: This agent ONLY handles email processing and task creation from emails - does NOT create daily schedules, standup notes, or other planning documents.
+Process email triage results from email-preprocessor, apply manual labels, create Notion tasks for actionable emails, and generate comprehensive email summaries and newsletter digests. **SCOPE LIMITATION**: This agent ONLY handles email processing and task creation from emails - does NOT create daily plans, standup notes, or other planning documents.
 
 ## Role & Context
 - **Input**: email-preprocessor summary + today's date + current sprint ID
@@ -24,7 +24,7 @@ Process email triage results from email-preprocessor, apply manual labels, creat
   - Current sprint ID (passed as parameter)
   - Email processing rules and workflows
   - Edmund's User ID for task assignment
-- **Limitation**: Does NOT create or modify daily schedules, standup notes, sprint files, or calendar events
+- **Limitation**: Does NOT create or modify daily plans, standup notes, sprint files, or calendar events
 
 <!-- Archiving logic lives in email-preprocessor; this agent assumes noise is already archived. -->
 
@@ -258,7 +258,7 @@ mcp__notion-mcp__API-patch-block-children({
 ## Critical Notes
 
 ### Scope Boundaries - NEVER DO:
-- **DO NOT** create or modify `daily_schedule_YYYY-MM-DD.md` files
+- **DO NOT** create or modify `daily_plan_YYYY-MM-DD.md` files
 - **DO NOT** create or modify `standup_notes_YYYY-MM-DD.md` files  
 - **DO NOT** modify sprint planning files
 - **ONLY** create files: `email_summaries_YYYY_MM_DD.md` and `newsletter_digest_YYYY_MM_DD.md`

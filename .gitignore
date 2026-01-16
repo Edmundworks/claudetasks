@@ -66,11 +66,11 @@ token.json
 # Archive directories (keeping tracked files)
 archive/email_summaries/*
 archive/newsletter_digests/*
-archive/daily_schedules/*
+archive/daily_plans/*
 archive/standup_notes/*
 !archive/email_summaries/.gitkeep
 !archive/newsletter_digests/.gitkeep
-!archive/daily_schedules/.gitkeep
+!archive/daily_plans/.gitkeep
 !archive/standup_notes/.gitkeep
 
 

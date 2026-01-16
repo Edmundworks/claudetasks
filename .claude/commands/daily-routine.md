@@ -21,7 +21,7 @@ Execute Edmund's complete daily routine by running Granola notes processing, CRM
 
 - Today's date: !`date +"%Y-%m-%d"`
 - Day of week: !`date +"%A"`
-- Active files in root: !`ls -la *.md 2>/dev/null | grep -E "(email_summaries|newsletter_digest|daily_schedule|standup_notes)" || echo "No daily files found"`
+- Active files in root: !`ls -la *.md 2>/dev/null | grep -E "(email_summaries|newsletter_digest|daily_plan|standup_notes)" || echo "No daily files found"`
 
 ## MANDATORY EXECUTION CHECKLIST
 
@@ -107,6 +107,29 @@ CHECKPOINT 4 COMPLETE
 
 ---
 
+### CHECKPOINT 4.5: Extract Action Items
+
+**Actions:**
+1. Follow the `extract-actions` skill **Mode 1: Extract** workflow (see `.claude/skills/extract-actions/SKILL.md`)
+2. Process all meeting summaries created today (use timestamps from fetch-granola-notes)
+3. Extract action items with proper dates, owners, and contact details
+4. Write to `scheduled_action_items.md`
+
+**Note**: Mode 2 (Retrieve) is used later by Daily Planning (Checkpoint 6) to get today's items.
+
+**Verification:**
+```
+CHECKPOINT 4.5 COMPLETE
+- Meeting summaries scanned: [X] files
+- Action items extracted: [Y] items
+- Items flagged for clarification: [Z]
+- File updated: scheduled_action_items.md
+```
+
+**STOP GATE**: Do not proceed until action items are extracted.
+
+---
+
 ### CHECKPOINT 5: Email Processing
 
 **Actions:**
@@ -131,19 +154,20 @@ CHECKPOINT 5 COMPLETE
 
 **Actions:**
 1. Launch `daily-planning` agent (Task tool)
-2. Agent pulls calendar events from work calendar
-3. Agent integrates email insights
-4. Verify file created: `daily_schedule_YYYY-MM-DD.md`
+2. Agent uses `extract-actions` skill **Mode 2** to retrieve today's action items
+3. Agent pulls calendar events from work calendar
+4. Agent integrates email insights and sprint tasks
+5. Verify file created: `daily_plan_YYYY-MM-DD.md`
 
 **Verification:**
 ```
 CHECKPOINT 6 COMPLETE
-- Calendar events: [X] events from work calendar
-- Time blocks: [Y] blocks allocated
-- File created: daily_schedule_YYYY-MM-DD.md
+- Calendar events: [X] meetings today
+- High priority items: [Y] items (meeting follow-ups + sprint tasks + urgent emails)
+- File created: daily_plan_YYYY-MM-DD.md
 ```
 
-**STOP GATE**: Do not proceed until daily schedule is generated.
+**STOP GATE**: Do not proceed until daily plan is generated.
 
 ---
 
@@ -167,7 +191,8 @@ ALL CHECKPOINTS COMPLETE
 ### Active Files (Root Directory - Today Only)
 - `email_summaries_YYYY_MM_DD.md`
 - `newsletter_digest_YYYY_MM_DD.md`
-- `daily_schedule_YYYY-MM-DD.md`
+- `daily_plan_YYYY-MM-DD.md`
+- `scheduled_action_items.md` (persistent, accumulates over time)
 
 ### Meeting Summaries Structure
 ```
@@ -184,7 +209,7 @@ ALL CHECKPOINTS COMPLETE
 /archive/
 ├── email_summaries/
 ├── newsletter_digests/
-└── daily_schedules/
+└── daily_plans/
 ```
 
 ## Execution Order - CHECKPOINT SYSTEM
@@ -194,6 +219,7 @@ ALL CHECKPOINTS COMPLETE
 2. Current Sprint Detection (STOP GATE)
 3. Fetch & Summarize Granola Notes (STOP GATE)
 4. CRM Update from Meeting Summaries (STOP GATE)
+4.5. Extract Action Items (STOP GATE)
 5. Email Processing (STOP GATE)
 6. Daily Planning (STOP GATE)
 7. Final Execution Summary
@@ -239,16 +265,22 @@ CRM UPDATES:
   - Status updates: [Y] progressions
   - Contextual notes added: [Z] pages
 
+ACTION ITEMS EXTRACTED:
+  - Meeting summaries scanned: [X] files
+  - Action items extracted: [Y] items
+  - Items flagged for clarification: [Z]
+  - File: scheduled_action_items.md
+
 EMAIL PROCESSING:
   - Work inbox: [X] emails processed, [Y] archived, [Z] remaining
   - Notion tasks created: [X] tasks from actionable emails
   - Newsletter insights: [X] items extracted
   - Files: email_summaries_YYYY_MM_DD.md, newsletter_digest_YYYY_MM_DD.md
 
-DAILY SCHEDULE:
-  - Calendar events: [X] events from work calendar
-  - Time blocks allocated: [Y] blocks
-  - Files: daily_schedule_YYYY-MM-DD.md
+DAILY PLAN:
+  - Calendar events: [X] meetings today
+  - High priority items: [Y] items
+  - Files: daily_plan_YYYY-MM-DD.md
 
 CURRENT SPRINT:
   - Sprint: Week [X]

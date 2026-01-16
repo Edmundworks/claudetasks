@@ -92,13 +92,13 @@ def generate_summary(metrics: Dict[str, Any]) -> str:
         emoji = "✅" if verification == "COMPLETE" else "❌"
         summary += f"  • Verification: {emoji} {verification}\n\n"
 
-    # Daily Schedule
+    # Daily Plan
     schedule = metrics.get('schedule', {})
     if schedule:
-        summary += "📆 DAILY SCHEDULE:\n"
+        summary += "📆 DAILY PLAN:\n"
         summary += f"  • Calendar events: {schedule.get('events', 0)} events from work calendar\n"
-        summary += f"  • Time blocks allocated: {schedule.get('blocks', 0)} blocks\n"
-        summary += f"  • Files: {schedule.get('files', 'daily_schedule_*.md')}\n\n"
+        summary += f"  • High priority items: {schedule.get('blocks', 0)} items\n"
+        summary += f"  • Files: {schedule.get('files', 'daily_plan_*.md')}\n\n"
 
     # Standup Notes
     standup = metrics.get('standup', {})
