@@ -286,10 +286,10 @@ Last updated: 2026-01-15 10:30
 
 ### Skillcraft
 - [ ] **Edmund**: Fix Poly's access issue and resend invite to poly@skillcraft.co
-  - Source: [Skillcraft Customer Call 2026-01-13](https://granola.ai/note/abc123)
+  - Source: [Skillcraft Customer Call 2026-01-13](https://notes.granola.ai/d/abc123)
 
 - [ ] **Edmund**: Manually curate shortlist - create "Extra Shortlist" column for top candidates
-  - Source: [Skillcraft Customer Call 2026-01-13](https://granola.ai/note/abc123)
+  - Source: [Skillcraft Customer Call 2026-01-13](https://notes.granola.ai/d/abc123)
 
 ---
 
@@ -297,7 +297,7 @@ Last updated: 2026-01-15 10:30
 
 ### Plastic Labs
 - [ ] **Superposition**: Turn on agent for Plastic Labs - contact courtland@plasticlabs.ai
-  - Source: [Plastic Labs Customer Call 2026-01-14](https://granola.ai/note/def456)
+  - Source: [Plastic Labs Customer Call 2026-01-14](https://notes.granola.ai/d/def456)
 
 ---
 
@@ -305,10 +305,10 @@ Last updated: 2026-01-15 10:30
 
 ### BayCompute
 - [ ] **Edmund**: Demo at 12:00 PM Eastern with Vijay and Matt (Head of ML) - focus on RL role
-  - Source: [BayCompute Sales Call 2026-01-14](https://granola.ai/note/ghi789)
+  - Source: [BayCompute Sales Call 2026-01-14](https://notes.granola.ai/d/ghi789)
 
 - [ ] **Edmund**: Send testimonials/case studies to ken@baycompute.com before demo
-  - Source: [BayCompute Sales Call 2026-01-14](https://granola.ai/note/ghi789)
+  - Source: [BayCompute Sales Call 2026-01-14](https://notes.granola.ai/d/ghi789)
 
 ---
 
@@ -316,7 +316,7 @@ Last updated: 2026-01-15 10:30
 
 ### Plastic Labs
 - [ ] **Superposition**: Get sales evals created with Aubrey (founding sales at Growth Central)
-  - Source: [Plastic Labs Customer Call 2026-01-14](https://granola.ai/note/def456)
+  - Source: [Plastic Labs Customer Call 2026-01-14](https://notes.granola.ai/d/def456)
 
 ---
 
@@ -324,7 +324,7 @@ Last updated: 2026-01-15 10:30
 
 ### Zenline (Q2 2026 - approx)
 - [ ] **Edmund**: Reconnect when Europe expansion ready - arber@zenline.ch, gerrit@zenline.ch
-  - Source: [Zenline Sales Call 2026-01-02](https://granola.ai/note/jkl012)
+  - Source: [Zenline Sales Call 2026-01-02](https://notes.granola.ai/d/jkl012)
 
 ---
 
@@ -332,11 +332,11 @@ Last updated: 2026-01-15 10:30
 
 ### Vimes
 - [ ] **Vimes**: Will intro to Nate at Pair
-  - Source: [Vimes Customer Call 2026-01-13](https://granola.ai/note/mno345)
+  - Source: [Vimes Customer Call 2026-01-13](https://notes.granola.ai/d/mno345)
 
 ### BayCompute
 - [ ] **BayCompute (Ken)**: Prepare job description/notes for ML role before Friday demo
-  - Source: [BayCompute Sales Call 2026-01-14](https://granola.ai/note/ghi789)
+  - Source: [BayCompute Sales Call 2026-01-14](https://notes.granola.ai/d/ghi789)
 
 ---
 
@@ -411,11 +411,11 @@ Capture all content under today's date header until the next `---` or `##` secti
 
 ### Skillcraft
 - [ ] **Edmund**: Fix Poly's access issue and resend invite to poly@skillcraft.co
-  - Source: [Skillcraft Customer Call 2026-01-13](https://granola.ai/note/abc123)
+  - Source: [Skillcraft Customer Call 2026-01-13](https://notes.granola.ai/d/abc123)
 
 ### BayCompute
 - [ ] **Edmund**: Send testimonials/case studies to ken@baycompute.com before demo
-  - Source: [BayCompute Sales Call 2026-01-14](https://granola.ai/note/ghi789)
+  - Source: [BayCompute Sales Call 2026-01-14](https://notes.granola.ai/d/ghi789)
 ```
 
 ### Step 4: Remove Today's Items from File

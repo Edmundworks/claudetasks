@@ -3,7 +3,7 @@
 **Date:** 2025-12-16 16:01
 **Company:** Hexagon (joinhexagon.com)
 **Participants:** Edmund, Tunde Adeyinka, Ramon (co-founder in background)
-**Granola URL:** https://granola.ai/note/b338e0e2-7fec-48c7-9a7e-309b09eaa3ca
+**Granola URL:** https://notes.granola.ai/d/b338e0e2-7fec-48c7-9a7e-309b09eaa3ca
 
 ## Onboarding Session Details
 

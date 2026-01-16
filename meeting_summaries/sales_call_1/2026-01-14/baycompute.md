@@ -6,7 +6,7 @@
 - **Email**: ken@baycompute.com, vijay@baycompute.com
 - **Date**: 2026-01-14
 - **Duration**: ~25 minutes (scheduled 15 min)
-- **Granola URL**: https://granola.ai/note/240906f7-dc8a-4ad6-96c6-0d1e1c2c4a65
+- **Granola URL**: https://notes.granola.ai/d/240906f7-dc8a-4ad6-96c6-0d1e1c2c4a65
 
 ## Company Background
 - BayCompute is building AI/ML infrastructure solutions

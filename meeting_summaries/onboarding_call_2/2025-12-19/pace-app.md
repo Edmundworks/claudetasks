@@ -5,7 +5,7 @@
 **Contact**: Victoria Pu <victoria@paceapp.ai>
 **Date**: 2025-12-19
 **Meeting ID**: a7b636d7-33f1-4140-b052-43dceb5e923f
-**Granola URL**: https://granola.ai/note/a7b636d7-33f1-4140-b052-43dceb5e923f
+**Granola URL**: https://notes.granola.ai/d/a7b636d7-33f1-4140-b052-43dceb5e923f
 
 ## Account Setup
 - **Account Created**: Yes (during call)

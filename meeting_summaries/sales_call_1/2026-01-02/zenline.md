@@ -3,7 +3,7 @@
 **Meeting ID:** 467f2d7b-a407-4d33-b952-dee339e173b5
 **Participants:** Edmund Cuthbert (Superposition), Arber Sejdiji (Zenline), Gerrit (Zenline)
 **Contact:** arber@zenline.ch, gerrit@zenline.ch
-**Granola Link:** https://granola.ai/note/467f2d7b-a407-4d33-b952-dee339e173b5
+**Granola Link:** https://notes.granola.ai/d/467f2d7b-a407-4d33-b952-dee339e173b5
 
 ---
 

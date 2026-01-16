@@ -2,7 +2,7 @@
 
 **Date:** December 22, 2025, 3:30 PM
 **Meeting ID:** 5cdf8aba-c4f3-401b-8deb-9bcdaef3ec04
-**Granola Link:** https://granola.ai/note/5cdf8aba-c4f3-401b-8deb-9bcdaef3ec04
+**Granola Link:** https://notes.granola.ai/d/5cdf8aba-c4f3-401b-8deb-9bcdaef3ec04
 **Duration:** 30 minutes
 
 ---

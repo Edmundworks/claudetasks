@@ -6,7 +6,7 @@
 - **Email**: ian@askvinny.co.uk
 - **Date**: 2026-01-14
 - **Duration**: ~20 minutes (scheduled 15 min)
-- **Granola URL**: https://granola.ai/note/57df495d-bdf6-45f9-a802-2f5aba609479
+- **Granola URL**: https://notes.granola.ai/d/57df495d-bdf6-45f9-a802-2f5aba609479
 
 ## Company Background
 - UK-based startup (Ian based near Aberdeen, Scotland)

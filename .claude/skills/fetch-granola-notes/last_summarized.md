@@ -13,3 +13,4 @@ Last time meetings were fetched and summarized by category.
 | Cap Product Feedback | Never | 0 |
 | Closing Candidate Prep | Never | 0 |
 | vendors | Never | 0 |
+| partners | 2026-01-15 10:30 | 1 (Confitech) |

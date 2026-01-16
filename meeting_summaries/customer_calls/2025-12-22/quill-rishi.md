@@ -5,7 +5,7 @@
 **Contact**: Rishi <rishi@quill.co>
 **Date**: 2025-12-22
 **Meeting ID**: 14af2349-3d2f-4648-a71e-6cb283e3e686
-**Granola URL**: https://granola.ai/note/14af2349-3d2f-4648-a71e-6cb283e3e686
+**Granola URL**: https://notes.granola.ai/d/14af2349-3d2f-4648-a71e-6cb283e3e686
 
 ## Call Purpose
 Regular customer check-in to review pipeline, discuss candidate feedback, and gather product feedback.

@@ -4,7 +4,7 @@
 - **Company**: Sonder Health
 - **Contact**: Akash Shah (akash@sonderhealth.co)
 - **Meeting Date**: 2026-01-07
-- **Granola URL**: https://granola.ai/note/19eace26-df55-48d8-aa58-5dfc9fdf91c3
+- **Granola URL**: https://notes.granola.ai/d/19eace26-df55-48d8-aa58-5dfc9fdf91c3
 
 ## Current Status with Superposition
 - Active customer

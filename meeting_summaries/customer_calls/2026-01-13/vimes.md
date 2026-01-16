@@ -4,7 +4,7 @@
 - **Company**: Vimes
 - **Contacts**: Kevin, Sol (founders)
 - **Meeting Date**: 2026-01-13
-- **Granola URL**: https://granola.ai/note/6f2dd031-4e13-475e-b06c-1eb1b9f441c6
+- **Granola URL**: https://notes.granola.ai/d/6f2dd031-4e13-475e-b06c-1eb1b9f441c6
 
 ## Current Status with Superposition
 - Active customer running engineering search

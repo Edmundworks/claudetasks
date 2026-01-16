@@ -6,7 +6,7 @@
 - **Email**: dan@picogrid.com
 - **Date**: 2026-01-12
 - **Duration**: ~25 minutes
-- **Granola URL**: https://granola.ai/note/953cc59e-7977-44e8-8e7a-40aa58bd26dd
+- **Granola URL**: https://notes.granola.ai/d/953cc59e-7977-44e8-8e7a-40aa58bd26dd
 
 ## Company Background
 - Defense tech company (LA-based)

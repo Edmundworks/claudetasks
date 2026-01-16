@@ -5,7 +5,7 @@
 **Contact**: Ayoola John <ayoola@astronaut.chat>
 **Date**: 2025-12-19
 **Meeting ID**: 7b4c042e-a75d-4ddb-817f-6c8ac1c9b941
-**Granola URL**: https://granola.ai/note/7b4c042e-a75d-4ddb-817f-6c8ac1c9b941
+**Granola URL**: https://notes.granola.ai/d/7b4c042e-a75d-4ddb-817f-6c8ac1c9b941
 
 ## Call Purpose
 Ayoola requested advice on closing a founding engineer candidate (Liana Novitz) who came through the Superposition pipeline and is currently in a 2-week work trial.

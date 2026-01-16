@@ -3,7 +3,7 @@
 **Date:** 2025-12-15 11:02
 **Company:** Archouse Health (archouse.health)
 **Participants:** Edmund, Paul (Founder), Ralph Haddad (likely CTO/technical lead)
-**Granola URL:** https://granola.ai/note/047a843f-c0e4-4a9b-898f-5aa04f242a0e
+**Granola URL:** https://notes.granola.ai/d/047a843f-c0e4-4a9b-898f-5aa04f242a0e
 
 ## Company Overview
 - **Location:** New York

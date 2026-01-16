@@ -4,7 +4,7 @@
 **Company:** Hexagon (joinhexagon.com)
 **Participants:** Edmund, Tunde Adeyinka, Ramon (co-founder joined later)
 **Referral Source:** Akash/Adrian from Krin (existing Superposition customer)
-**Granola URL:** https://granola.ai/note/0e446608-fccc-42bc-8a43-a20f06decd86
+**Granola URL:** https://notes.granola.ai/d/0e446608-fccc-42bc-8a43-a20f06decd86
 
 ## Company Overview
 - **Location:** New York (investors' office in Meatpacking)

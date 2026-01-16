@@ -6,7 +6,7 @@
 - **Email**: tenaya@hotplate.com
 - **Date**: 2026-01-12
 - **Duration**: ~30 minutes
-- **Granola URL**: https://granola.ai/note/306bac62-7fbc-49e0-860f-79146924334d
+- **Granola URL**: https://notes.granola.ai/d/306bac62-7fbc-49e0-860f-79146924334d
 
 ## Company Background
 - YC company building in food tech - "Shopify for food drops"

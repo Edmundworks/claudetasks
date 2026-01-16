@@ -6,7 +6,7 @@
 - **Email**: rachel@stardust.app, tuba@stardust.app
 - **Date**: 2026-01-13
 - **Duration**: ~15 minutes
-- **Granola URL**: https://granola.ai/note/70797b3a-d699-44c6-95ba-bcac565b8ee3
+- **Granola URL**: https://notes.granola.ai/d/70797b3a-d699-44c6-95ba-bcac565b8ee3
 
 ## Company Background
 - Mobile consumer women's health app (period tracker, pregnancy tracker)

@@ -63,9 +63,9 @@ Create a focused plan with **high priority items only**.
 
 ### Meeting Follow-ups (from scheduled_action_items.md)
 - [ ] **Edmund**: Fix Poly's access issue - poly@skillcraft.co
-  - Source: [Skillcraft Customer Call](https://granola.ai/note/abc123)
+  - Source: [Skillcraft Customer Call](https://notes.granola.ai/d/abc123)
 - [ ] **Edmund**: Send testimonials to ken@baycompute.com before Friday demo
-  - Source: [BayCompute Sales Call](https://granola.ai/note/def456)
+  - Source: [BayCompute Sales Call](https://notes.granola.ai/d/def456)
 
 ### Sprint Tasks Due Today
 - [ ] **[Task Name](https://notion.so/page-id)** - context

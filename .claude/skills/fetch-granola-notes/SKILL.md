@@ -159,7 +159,7 @@ mcp__granola__analyze_meeting_patterns({
 
 Each meeting includes a clickable URL to view it in the Granola web app.
 
-**Format**: `https://granola.ai/note/{meeting_id}`
+**Format**: `https://notes.granola.ai/d/{meeting_id}`
 
 The URL is returned by:
 - `get_folder_meetings` - for each meeting in the list
@@ -312,7 +312,7 @@ Returns Granola's notes/overview/summary fields.
 **Contact**: {participant name} <{email}>
 **Date**: {YYYY-MM-DD}
 **Meeting ID**: {meeting_id}
-**Granola URL**: https://granola.ai/note/{meeting_id}
+**Granola URL**: https://notes.granola.ai/d/{meeting_id}
 
 ## Referral Source
 {How they found us - VC referral, personal referral, inbound, etc.}
@@ -358,7 +358,7 @@ Returns Granola's notes/overview/summary fields.
 **Contact**: {participant name} <{email}>
 **Date**: {YYYY-MM-DD}
 **Meeting ID**: {meeting_id}
-**Granola URL**: https://granola.ai/note/{meeting_id}
+**Granola URL**: https://notes.granola.ai/d/{meeting_id}
 
 ## Account Setup
 - **Account Created**: Yes/No
@@ -388,7 +388,7 @@ Returns Granola's notes/overview/summary fields.
 **Contact**: {participant name} <{email}>
 **Date**: {YYYY-MM-DD}
 **Meeting ID**: {meeting_id}
-**Granola URL**: https://granola.ai/note/{meeting_id}
+**Granola URL**: https://notes.granola.ai/d/{meeting_id}
 
 ## Call Purpose
 {Why the call was scheduled}

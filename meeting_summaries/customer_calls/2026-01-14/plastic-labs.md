@@ -4,7 +4,7 @@
 - **Company**: Plastic Labs
 - **Contact**: Courtland Leer (courtland@plasticlabs.ai)
 - **Meeting Date**: 2026-01-14
-- **Granola URL**: https://granola.ai/note/72af74a2-09da-4718-8d6b-a61c7acea6cb
+- **Granola URL**: https://notes.granola.ai/d/72af74a2-09da-4718-8d6b-a61c7acea6cb
 
 ## Current Status with Superposition
 - Active customer piloting founding salesperson search

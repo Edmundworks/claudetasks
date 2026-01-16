@@ -4,7 +4,7 @@
 - **Company**: Skillcraft
 - **Contact**: David Shacklette (david@skillcraft.co)
 - **Meeting Date**: 2026-01-13
-- **Granola URL**: https://granola.ai/note/cb0ffdc5-9909-4618-a49d-d2abb04d424c
+- **Granola URL**: https://notes.granola.ai/d/cb0ffdc5-9909-4618-a49d-d2abb04d424c
 
 ## Current Status with Superposition
 - Active customer with Design Engineer search
