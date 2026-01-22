@@ -1,12 +1,15 @@
 # Scheduled Action Items
 
-Last updated: 2026-01-15 10:45
+Last updated: 2026-01-20 13:30
 
 ---
 
-## 2026-01-17 (Friday)
+## 2026-01-22 (Wednesday)
 
-*No internal action items scheduled*
+### Aristotle
+- [ ] **Edmund**: Curate Aristotle's 16-candidate backlog - filter for <5 years experience, then ping Shan when complete - shan@jsv.ai
+  - Context: Requirement change - they want younger engineers (<5yr) for founding hires. More comfortable managing peers vs senior hires. AI-native candidates preferred.
+  - Source: [Aristotle Customer Call 2026-01-19](https://granola.ai/note/dec281b5-0404-4250-986d-f8314776d4ef)
 
 ---
 
@@ -17,6 +20,10 @@ Last updated: 2026-01-15 10:45
 ---
 
 ## Awaiting External Action
+
+### Aristotle
+- [ ] **Aristotle (Shan)**: Put updated requirements in Slack - agent will pick up automatically
+  - Source: [Aristotle Customer Call 2026-01-19](https://granola.ai/note/dec281b5-0404-4250-986d-f8314776d4ef)
 
 ### Confitech
 - [ ] **Confitech (Eugen/Viktor)**: Send partnership contract draft - bondarenko@confitech.de
